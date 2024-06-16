@@ -1,0 +1,174 @@
+name: Deploy production
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  deployments: write
+
+jobs:
+  set-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set current version
+        run: echo "$(date +'%Y.%m.%d.%H.%M.%S')" > version.txt
+      
+      - name: Upload version
+        uses: actions/upload-artifact@v3
+        with:
+          name: version
+          path: version.txt
+
+  create_tag_and_prerelease:
+    name: Create Tag and Pre-release
+    needs: set-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download version
+        uses: actions/download-artifact@v3
+        with:
+          name: version
+      
+      - name: Set version environment variable
+        run: echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get commit information
+        run: |
+          COMMIT_MESSAGE=$(git log --format=%B -n 1 ${{ github.sha }})
+          COMMITTER_NAME=$(git log -1 --format='%an' ${{ github.sha }})
+          echo "COMMIT_MESSAGE=${COMMIT_MESSAGE}" >> $GITHUB_ENV
+          echo "COMMITTER_NAME=${COMMITTER_NAME}" >> $GITHUB_ENV
+
+      - name: Print commit information
+        run: |
+          echo "Commit SHA: ${{ github.sha }}"
+          echo "Commit Message: $COMMIT_MESSAGE"
+          echo "Committer Name: $COMMITTER_NAME "
+
+      - name: Create draft release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.VERSION }}
+          release_name: v${{ env.VERSION }}
+          body: |
+            ## Release Information
+            
+            | Commit       | Author          | Message            |
+            | ------------ | --------------- | ------------------ |
+            | ${{ github.sha }} | ${{ env.COMMITTER_NAME }} | ${{ env.COMMIT_MESSAGE }} |
+          prerelease: true
+          draft: false
+
+      - name: Set release id
+        id: set_release_id
+        run: echo "${{ steps.create_release.outputs.id }}" > release_id.txt
+
+      - name: Upload release ID
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-id
+          path: release_id.txt
+
+  publish:
+    name: Publish to Cloudflare Pages
+    runs-on: ubuntu-latest
+    needs: create_tag_and_prerelease
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20.14.0'
+
+      - name: Install pnpm
+        run: npm install -g pnpm@9.3.0
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build project
+        run: pnpm build
+
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
+          directory: ${{ secrets.BUILD_OUTPUT_DIRECTORY }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+
+  handle-deployment-status:
+    name: Handle Deployment Status
+    runs-on: ubuntu-latest
+    needs: publish
+    if: ${{ always() }}
+    steps:
+      - name: Download version
+        uses: actions/download-artifact@v3
+        with:
+          name: version
+      
+      - name: Set version environment variable
+        run: echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
+
+      - name: Download release ID
+        uses: actions/download-artifact@v3
+        with:
+          name: release-id
+
+      - name: Set release id
+        id: set_release_id
+        run: |
+          RELEASE_ID=$(cat release_id.txt)
+          echo "RELEASE_ID=$RELEASE_ID" >> $GITHUB_ENV
+          if [ -z "$RELEASE_ID" ]; then
+            echo "::error::Failed to retrieve RELEASE_ID. Check artifact content."
+            exit 1
+          fi
+
+      - name: Update release draft status on success
+        if: ${{ success() }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_ID: ${{ env.RELEASE_ID }}
+        run: |
+          # Update the release to change draft status to false and pre-release to false
+          curl -s -X PATCH -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}" \
+            -d '{"draft": false, "prerelease": false}'
+
+      - name: Delete draft release and tag on failure
+        if: ${{ failure() }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_ID: ${{ env.RELEASE_ID }}
+        run: |
+          # Delete the draft release
+          curl -s -X DELETE -H "Authorization: token $GITHUB_TOKEN" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}"
+          
+          # Delete the tag associated with the release
+          git push --delete origin refs/tags/${VERSION}
+
+      - name: Check Cloudflare Pages deployment status
+        id: check_deployment
+        if: ${{ failure() }}
+        run: echo "Cloudflare Pages deployment failed."
+
+      - name: Check Cloudflare Pages deployment status
+        if: ${{ success() }}
+        run: echo "Cloudflare Pages deployment successful."
