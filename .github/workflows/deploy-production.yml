@@ -10,34 +10,30 @@ permissions:
   contents: write
   deployments: write
 
+concurrency:
+  group: deploy-production-group-lock
+
 jobs:
   set-version:
+    name: Set Version
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Set current version
-        run: echo "$(date +'%Y.%m.%d.%H.%M.%S')" > version.txt
-      
-      - name: Upload version
-        uses: actions/upload-artifact@v3
-        with:
-          name: version
-          path: version.txt
+        uses: ./.github/actions/upload-build-version
 
   create_tag_and_prerelease:
     name: Create Tag and Pre-release
     needs: set-version
     runs-on: ubuntu-latest
     steps:
-      - name: Download version
-        uses: actions/download-artifact@v3
-        with:
-          name: version
-      
-      - name: Set version environment variable
-        run: echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
-
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Download build version
+        uses: ./.github/actions/download-build-version
 
       - name: Get commit information
         run: |
@@ -58,8 +54,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.VERSION }}
-          release_name: v${{ env.VERSION }}
+          tag_name: ${{ env.BUILD_VERSION }}
+          release_name: v${{ env.BUILD_VERSION }}
           body: |
             ## Release Information
             
@@ -69,15 +65,10 @@ jobs:
           prerelease: true
           draft: false
 
-      - name: Set release id
-        id: set_release_id
-        run: echo "${{ steps.create_release.outputs.id }}" > release_id.txt
-
       - name: Upload release ID
-        uses: actions/upload-artifact@v3
+        uses: ./.github/actions/upload-release-id
         with:
-          name: release-id
-          path: release_id.txt
+          release_id: ${{ steps.create_release.outputs.id }}
 
   publish:
     name: Publish to Cloudflare Pages
@@ -87,16 +78,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20.14.0'
-
-      - name: Install pnpm
-        run: npm install -g pnpm@9.3.0
-
       - name: Install dependencies
-        run: pnpm install
+        uses: ./.github/actions/install-dependencies
 
       - name: Build project
         run: pnpm build
@@ -111,65 +94,30 @@ jobs:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           branch: main
 
-  handle-deployment-status:
-    name: Handle Deployment Status
+  publish_release_on_sucess:
+    name: Publish Release on Success
     runs-on: ubuntu-latest
     needs: publish
-    if: ${{ always() }}
+    if: ${{ success() }}
     steps:
-      - name: Download version
-        uses: actions/download-artifact@v3
-        with:
-          name: version
-      
-      - name: Set version environment variable
-        run: echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
-
-      - name: Download release ID
-        uses: actions/download-artifact@v3
-        with:
-          name: release-id
-
-      - name: Set release id
-        id: set_release_id
-        run: |
-          RELEASE_ID=$(cat release_id.txt)
-          echo "RELEASE_ID=$RELEASE_ID" >> $GITHUB_ENV
-          if [ -z "$RELEASE_ID" ]; then
-            echo "::error::Failed to retrieve RELEASE_ID. Check artifact content."
-            exit 1
-          fi
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Update pre-release to release on success
-        if: ${{ success() }}
-        env:
+        uses: ./.github/actions/update-prerelease-to-release
+        with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_ID: ${{ env.RELEASE_ID }}
-        run: |
-          # Update the release to change draft status to false and pre-release to false
-          curl -s -X PATCH -H "Authorization: token $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}" \
-            -d '{"draft": false, "prerelease": false}'
 
-      - name: Delete pre-release and tag on failure
-        if: ${{ failure() }}
-        env:
+  delete_release_on_failure:
+    name: Delete Release on Failure
+    runs-on: ubuntu-latest
+    needs: publish
+    if: ${{ failure() || cancelled() }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Delete release
+        uses: ./.github/actions/delete-release-and-tag
+        with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_ID: ${{ env.RELEASE_ID }}
-        run: |
-          # Delete the pre-release
-          curl -s -X DELETE -H "Authorization: token $GITHUB_TOKEN" \
-            "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}"
-          
-          # Delete the tag associated with the release
-          git push --delete origin refs/tags/${VERSION}
-
-      - name: Check Cloudflare Pages deployment status
-        id: check_deployment
-        if: ${{ failure() }}
-        run: echo "Cloudflare Pages deployment failed."
-
-      - name: Check Cloudflare Pages deployment status
-        if: ${{ success() }}
-        run: echo "Cloudflare Pages deployment successful."

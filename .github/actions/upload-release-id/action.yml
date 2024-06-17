@@ -1,0 +1,35 @@
+name: 'Upload Release ID'
+description: 'Upload the release ID as an artifact'
+
+inputs:
+  release_id:
+    description: 'The release ID to upload'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set release ID
+      shell: bash
+      run: |
+        echo "RELEASE_ID=${{ inputs.release_id }}" >> $GITHUB_ENV
+
+    - name: Check release ID
+      shell: bash
+      run: |
+        if [ -z "$RELEASE_ID" ]; then
+          echo "Failed to set RELEASE_ID environment variable"
+          exit 1
+        fi
+        echo "RELEASE_ID=$RELEASE_ID" > release-id.txt
+
+    - name: Print release ID
+      shell: bash
+      run: |
+        echo "Release ID: $RELEASE_ID"
+
+    - name: Upload release ID
+      uses: actions/upload-artifact@v3
+      with:
+        name: release-id
+        path: release-id.txt

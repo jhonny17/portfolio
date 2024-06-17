@@ -1,0 +1,31 @@
+name: 'Delete Release'
+description: 'Delete the release'
+
+inputs:
+  GITHUB_TOKEN:
+    description: 'GitHub token'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Download build version
+      uses: ./.github/actions/download-build-version
+
+    - name: Download release ID
+      uses: ./.github/actions/download-release-id
+
+    - name: Delete release
+      env:
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+        RELEASE_ID: ${{ env.RELEASE_ID }}
+      shell: bash
+      run: |
+        curl -s -X DELETE -H "Authorization: token ${GITHUB_TOKEN}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}"
+
+    - name: Delete tag
+      shell: bash
+      run: |
+        git push --delete origin refs/tags/${BUILD_VERSION}
