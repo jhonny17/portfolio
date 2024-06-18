@@ -35,40 +35,16 @@ jobs:
       - name: Download build version
         uses: ./.github/actions/download-build-version
 
-      - name: Get commit information
-        run: |
-          COMMIT_MESSAGE=$(git log --format=%B -n 1 ${{ github.sha }})
-          COMMITTER_NAME=$(git log -1 --format='%an' ${{ github.sha }})
-          echo "COMMIT_MESSAGE=${COMMIT_MESSAGE}" >> $GITHUB_ENV
-          echo "COMMITTER_NAME=${COMMITTER_NAME}" >> $GITHUB_ENV
-
-      - name: Print commit information
-        run: |
-          echo "Commit SHA: ${{ github.sha }}"
-          echo "Commit Message: $COMMIT_MESSAGE"
-          echo "Committer Name: $COMMITTER_NAME "
-
-      - name: Create pre-release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Tag and Pre-release
+        uses: ./.github/actions/create-tag-and-prerelease
         with:
-          tag_name: ${{ env.BUILD_VERSION }}
-          release_name: v${{ env.BUILD_VERSION }}
-          body: |
-            ## Release Information
-            
-            | Commit       | Author          | Message            |
-            | ------------ | --------------- | ------------------ |
-            | ${{ github.sha }} | ${{ env.COMMITTER_NAME }} | ${{ env.COMMIT_MESSAGE }} |
-          prerelease: true
-          draft: false
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          build_version: ${{ env.BUILD_VERSION }}
 
       - name: Upload release ID
         uses: ./.github/actions/upload-release-id
         with:
-          release_id: ${{ steps.create_release.outputs.id }}
+          release_id: ${{ env.release_id }}
 
   publish:
     name: Publish to Cloudflare Pages
