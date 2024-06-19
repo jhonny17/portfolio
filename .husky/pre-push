@@ -1,0 +1,53 @@
+#!/usr/bin/env sh
+
+
+# Header section
+
+echo
+echo
+echo Pre-push hook started
+echo
+echo
+echo ------------------------------------------------------------------
+echo
+
+# Check for protected branches
+
+printf "Safe branch check ............................................. "
+
+BRANCH=`git rev-parse --abbrev-ref HEAD`
+PROTECTED_BRANCHES="^(main)"
+
+if [[ "$BRANCH" =~ $PROTECTED_BRANCHES ]]
+then
+    IS_PROTECTED_BRANCH=true
+    echo "❌"
+else
+    IS_PROTECTED_BRANCH=false
+    echo "✅"
+fi
+
+
+
+echo
+echo ------------------------------------------------------------------
+
+# Display error message if the branch is protected
+echo
+echo
+
+if [ "$IS_PROTECTED_BRANCH" = true ]
+then
+    echo ERROR:
+    echo "You are not allowed to commit to the '$BRANCH' branch"
+    echo
+    echo
+    echo
+    exit 1
+fi
+
+echo ✨ Good to push ✨
+echo
+echo
+
+exit 0
