@@ -27,6 +27,9 @@ else
     echo "✅"
 fi
 
+# Check for test coverage
+
+pnpm exec vitest --coverage --watch false
 
 
 echo

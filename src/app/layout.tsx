@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Jhonny Vargas Arias | Portfolio',
   description:
-    "Jhonny Vargas Arias' portfolio showcasing software engineering projects, skills, and experience in front-end and back-end development. Connect with me on GitHub: https://github.com/jhonnyvargasarias",
+    "Jhonny Vargas Arias' portfolio showcasing software engineering projects, skills, and experience in front-end and back-end development. Connect with me on GitHub: https://github.com/jhonny17",
   openGraph: {
     type: 'website',
     url: 'https://jhonnyvargasarias.com',
