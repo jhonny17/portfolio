@@ -28,9 +28,9 @@ echo "Linter check     ................................................."
 
 # Filter files for linter
 LINTER_FILES=$(echo "$STAGED_FILES" | grep -E '\.(js|jsx|ts|tsx)$' || true)
-
+echo "$LINTER_FILES"
 if [ -n "$LINTER_FILES" ]; then
-    echo "$LINTER_FILES" | xargs pnpm exec next lint --fix
+    echo "$LINTER_FILES" | xargs pnpm exec next lint --fix --file
     if [ $? -ne 0 ]; then
         echo "Linter failed."
         exit 1
