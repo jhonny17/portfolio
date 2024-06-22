@@ -29,7 +29,7 @@ describe('MaintenanceMode', () => {
 
   it('should render the update message', () => {
     render(<MaintenanceMode />);
-    const updateMessage = screen.getByText(/^Stay tuned for updates!$/);
+    const updateMessage = screen.getByText(/^This is just a test$/);
     expect(updateMessage).toBeInTheDocument();
   });
 });

@@ -5,7 +5,7 @@ export const MaintenanceMode = () => (
       <span className="text-sm">Portfolio</span>
       <div className="border-t border-gray-300 w-2/4 my-4"></div>
       <p>This page is currently under development.</p>
-      <p>Stay tuned for updates!</p>
+      <p>This is just a test</p>
     </div>
   </main>
 );
