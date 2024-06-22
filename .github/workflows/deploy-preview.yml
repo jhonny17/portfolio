@@ -1,0 +1,78 @@
+name: Deploy preview
+run-name: Deploy preview
+
+on:
+  pull_request:
+    branches:
+      - '**'
+      - '!main'
+
+permissions:
+  contents: write
+  deployments: write
+
+concurrency:
+  group: deploy-preview-group-lock
+
+jobs:
+  set-version:
+    name: Set Version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set current version
+        uses: ./.github/actions/upload-build-version
+
+  publish:
+    name: Publish to Cloudflare Pages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Build project
+        run: pnpm build
+
+      - name: Extract branch name
+        run: |
+          echo "branch_name=${GITHUB_REF##*/}" >> $GITHUB_ENV
+
+      - name: Deploy to Cloudflare Pages
+        id: deploy
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
+          directory: ${{ secrets.BUILD_OUTPUT_DIRECTORY }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ env.branch_name }}
+
+      - name: Comment preview URL on pull request
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = '${{ steps.deploy.outputs.url }}';
+            const prNumber = context.payload.pull_request.number;
+            const commentBody = `Preview URL: ${url}`;
+
+            const { data: comments } = await github.issues.listComments({
+              ...context.repo,
+              issue_number: prNumber
+            });
+
+            const commentExists = comments.some(comment => comment.body.includes(commentBody));
+
+            if (!commentExists) {
+              await github.issues.createComment({
+                ...context.repo,
+                issue_number: prNumber,
+                body: commentBody
+              });
+            }
