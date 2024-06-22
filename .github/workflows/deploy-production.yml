@@ -60,7 +60,12 @@ jobs:
       - name: Build project
         run: pnpm build
 
-      - name: Publish to Cloudflare Pages
+      - name: Extract branch name
+        id: extract_branch
+        run: |
+          echo "branch_name=${GITHUB_REF##*/}" >> $GITHUB_ENV
+
+      - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -68,7 +73,7 @@ jobs:
           projectName: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
           directory: ${{ secrets.BUILD_OUTPUT_DIRECTORY }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
+          branch: ${{ env.branch_name }}
 
   publish_release_on_sucess:
     name: Publish Release on Success
