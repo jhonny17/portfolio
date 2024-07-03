@@ -14,45 +14,49 @@ concurrency:
   group: deploy-production-group-lock
 
 jobs:
-  set-version:
-    name: Set Version
+  generate-next-version:
+    name: Generate next version
     runs-on: ubuntu-latest
+    outputs:
+      next_version: ${{ steps.generate-next-version.outputs.next_version }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Set current version
-        uses: ./.github/actions/upload-build-version
+      - name: Generate next version
+        id: generate-next-version
+        uses: jhonny17/actions/generate-next-version@main
+        with:
+          github_token: ${{ secrets.PAT_TOKEN }}
+          max_patch_version: 10
+          max_minor_version: 10
 
-  create_tag_and_prerelease:
-    name: Create Tag and Pre-release
-    needs: set-version
+  create-tag-and-pre-release:
+    name: Create tag and pre-release
     runs-on: ubuntu-latest
+    needs: generate-next-version
+    outputs:
+      release_id: ${{ steps.create-tag-and-pre-release-step.outputs.release_id }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Download build version
-        uses: ./.github/actions/download-build-version
-
-      - name: Create Tag and Pre-release
-        uses: ./.github/actions/create-tag-and-prerelease
+      - name: Create tag and pre-release
+        id: create-tag-and-pre-release-step
+        uses: jhonny17/actions/create-tag-and-pre-release@main
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          build_version: ${{ env.BUILD_VERSION }}
-
-      - name: Upload release ID
-        uses: ./.github/actions/upload-release-id
-        with:
-          release_id: ${{ env.release_id }}
+          github_token: ${{ secrets.PAT_TOKEN }}
+          build_version: ${{ needs.generate-next-version.outputs.next_version }}
 
   publish:
     name: Publish to Cloudflare Pages
     runs-on: ubuntu-latest
-    needs: create_tag_and_prerelease
+    needs: create-tag-and-pre-release
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
@@ -63,7 +67,7 @@ jobs:
       - name: Extract branch name
         id: extract_branch
         run: |
-          echo "branch_name=${GITHUB_REF##*/}" >> $GITHUB_ENV
+          echo "branch_name=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
@@ -72,33 +76,43 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
           directory: ${{ secrets.BUILD_OUTPUT_DIRECTORY }}
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ env.branch_name }}
+          gitHubToken: ${{ secrets.PAT_TOKEN }}
+          branch: ${{ steps.extract_branch.outputs.branch_name }}
 
   publish_release_on_sucess:
     name: Publish Release on Success
     runs-on: ubuntu-latest
-    needs: publish
+    needs: [create-tag-and-pre-release, publish]
     if: ${{ success() }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Update pre-release to release on success
-        uses: ./.github/actions/update-prerelease-to-release
+      - name: Update pre-release to release
+        uses: ./update-release
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          release_id: ${{ needs.create-tag-and-pre-release.outputs.release_id }}
+          prerelease: false
+          draft: false
 
   delete_release_on_failure:
     name: Delete Release on Failure
     runs-on: ubuntu-latest
-    needs: publish
+    needs: [generate-next-version, create-tag-and-pre-release, publish]
     if: ${{ failure() || cancelled() }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Delete release
-        uses: ./.github/actions/delete-release-and-tag
+        uses: jhonny17/actions/delete-release@main
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.PAT_TOKEN }}
+          release_id: ${{ needs.create-tag-and-pre-release.outputs.release_id }}
+
+      - name: Delete tag
+        uses: jhonny17/actions/delete-tag@main
+        with:
+          github_token: ${{ secrets.PAT_TOKEN }}
+          build_version: ${{ needs.generate-next-version.outputs.next_version }}
