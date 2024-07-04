@@ -27,7 +27,7 @@ jobs:
 
       - name: Generate next version
         id: generate-next-version
-        uses: jhonny17/actions/generate-next-version@main
+        uses: jhonnyvargasarias/actions/generate-next-version@main
         with:
           github_token: ${{ secrets.PAT_TOKEN }}
           max_patch_version: 10
@@ -45,7 +45,7 @@ jobs:
 
       - name: Create tag and pre-release
         id: create-tag-and-pre-release-step
-        uses: jhonny17/actions/create-tag-and-pre-release@main
+        uses: jhonnyvargasarias/actions/create-tag-and-pre-release@main
         with:
           github_token: ${{ secrets.PAT_TOKEN }}
           build_version: ${{ needs.generate-next-version.outputs.next_version }}
@@ -89,7 +89,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Update pre-release to release
-        uses: ./update-release
+        uses: jhonnyvargasarias/actions/update-release@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           release_id: ${{ needs.create-tag-and-pre-release.outputs.release_id }}
@@ -106,13 +106,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Delete release
-        uses: jhonny17/actions/delete-release@main
+        uses: jhonnyvargasarias/actions/delete-release@main
         with:
           github_token: ${{ secrets.PAT_TOKEN }}
           release_id: ${{ needs.create-tag-and-pre-release.outputs.release_id }}
 
       - name: Delete tag
-        uses: jhonny17/actions/delete-tag@main
+        uses: jhonnyvargasarias/actions/delete-tag@main
         with:
           github_token: ${{ secrets.PAT_TOKEN }}
           build_version: ${{ needs.generate-next-version.outputs.next_version }}
