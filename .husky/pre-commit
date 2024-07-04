@@ -10,7 +10,7 @@ echo "------------------------------------------------------------------"
 echo
 
 # Get list of staged files
-STAGED_FILES=$(git diff --cached --name-only)
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=d)
 
 # Check prettier
 echo "Prettier check   ................................................."
@@ -37,9 +37,7 @@ if [ -n "$LINTER_FILES" ]; then
     fi
 fi
 
-echo
 echo "------------------------------------------------------------------"
-echo
 echo
 echo "✨ Good to commit ✨"
 echo
