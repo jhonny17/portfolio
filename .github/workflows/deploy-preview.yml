@@ -53,7 +53,7 @@ jobs:
           script: |
             const commentMessage = 'Preview URL:';
             const url = '${{ steps.deploy.outputs.url }}';
-            const commentBody = `${commentMessage} <a href="${url}" target="_blank">${url}</a>`;
+            const commentBody = `Commit: ${context.sha}\n${commentMessage} <a href="${url}" target="_blank">${url}</a>`;
 
             const prNumber = context.payload.pull_request.number;
             const { data: comments } = await github.rest.issues.listComments({
