@@ -22,7 +22,7 @@ runs:
 
     - name: Cache pnpm store and node_modules
       id: pnpm-cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ${{ steps.pnpm-store-path.outputs.store-path }}
