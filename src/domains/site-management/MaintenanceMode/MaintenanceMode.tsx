@@ -1,11 +1,16 @@
 export const MaintenanceMode = () => (
   <main className="h-dvh grid justify-items-center items-center">
-    <div className="grid justify-items-center p-5 rounded-md bg-slate-900 backdrop-blur-sm">
-      <h1 className="text-xl">Jhonny Vargas Arias</h1>
-      <span className="text-sm">Portfolio</span>
-      <div className="border-t border-gray-300 w-2/4 my-4"></div>
-      <p>This page is currently under development.</p>
-      <p>Stay tuned for updates!</p>
+    <div className="relative p-6 min-w-max aspect-video">
+      <div className="absolute inset-0 filter blur-3xl rounded-full bg-gradient-to-r from-emerald-500 from-20% via-teal-800 via-50% to-emerald-500 to-90% animate-pulse" />
+      <div className="p-8 bg-slate-950 bg-opacity-30 rounded-lg backdrop-blur">
+        <div className="grid justify-items-center">
+          <h1 className="text-2xl font-serif">Jhonny Vargas Arias</h1>
+          <span className="text-sm tracking-wide">Portfolio</span>
+          <div className="border-t border-gray-300 w-2/4 my-4" />
+          <p>This page is currently under development.</p>
+          <p>Stay tuned for updates!</p>
+        </div>
+      </div>
     </div>
   </main>
 );
