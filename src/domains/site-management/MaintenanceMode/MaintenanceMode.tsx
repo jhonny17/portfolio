@@ -1,11 +1,20 @@
+import cx from 'classnames';
+
+import cl from './MaintenanceMode.module.css';
+
 export const MaintenanceMode = () => (
-  <main className="h-dvh grid justify-items-center items-center">
-    <div className="grid justify-items-center p-5 rounded-md bg-slate-900 backdrop-blur-sm">
-      <h1 className="text-xl">Jhonny Vargas Arias</h1>
-      <span className="text-sm">Portfolio</span>
-      <div className="border-t border-gray-300 w-2/4 my-4"></div>
-      <p>This page is currently under development.</p>
-      <p>Stay tuned for updates!</p>
+  <main className={cl.maintenanceMode}>
+    <div className={cl.container}>
+      <div className={cx(cl.lightEffect, 'animate-pulse')} />
+      <div className={cl.card}>
+        <div className={cl.cardContainer}>
+          <h1 className={cl.title}>Jhonny Vargas Arias</h1>
+          <span className={cl.subtitle}>Portfolio</span>
+          <div className={cl.divider} />
+          <p>This page is currently under development.</p>
+          <p>Stay tuned for updates!</p>
+        </div>
+      </div>
     </div>
   </main>
 );

@@ -1,0 +1,31 @@
+.maintenanceMode {
+  @apply h-dvh grid justify-items-center items-center;
+
+  .container {
+    @apply relative p-6 w-2/5 aspect-video;
+
+    .lightEffect {
+      @apply absolute inset-0 filter blur-3xl rounded-full bg-gradient-to-r from-emerald-500 from-20% via-teal-800 via-50% to-emerald-500 to-90%;
+    }
+
+    .card {
+      @apply p-8 bg-slate-950 bg-opacity-30 rounded-lg backdrop-blur;
+
+      .cardContainer {
+        @apply grid justify-items-center;
+
+        .title {
+          @apply text-2xl font-serif;
+        }
+
+        .subtitle {
+          @apply text-sm tracking-wide;
+        }
+
+        .divider {
+          @apply border-t border-gray-300 w-2/4 my-4;
+        }
+      }
+    }
+  }
+}
