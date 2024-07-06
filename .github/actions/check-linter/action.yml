@@ -1,14 +1,11 @@
-name: Run tests
+name: Check linter
 
 runs:
   using: 'composite'
   steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
     - name: Install dependencies
       uses: ./.github/actions/install-dependencies
 
-    - name: Run tests
+    - name: Check linter
       shell: bash
-      run: pnpm exec vitest --watch false
+      run: pnpm exec next lint
