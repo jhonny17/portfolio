@@ -45,6 +45,12 @@ jobs:
           gitHubToken: ${{ secrets.PAT_TOKEN }}
           branch: ${{ steps.extract_branch.outputs.branch_name }}
 
+      - name: Get last commit sha
+        id: get_commit_sha
+        shell: bash
+        run: |
+          echo "commit_sha=$(git rev-parse HEAD | cut -c 1-7)" >> $GITHUB_OUTPUT
+
       - name: Comment preview URL on pull request
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
@@ -53,7 +59,8 @@ jobs:
           script: |
             const commentMessage = 'Preview URL:';
             const url = '${{ steps.deploy.outputs.url }}';
-            const commentBody = `Commit: ${context.sha}\n${commentMessage} <a href="${url}" target="_blank">${url}</a>`;
+            const commitSha = '${{ steps.get_commit_sha.outputs.commit_sha }}';
+            const commentBody = `Commit: ${commitSha}\n${commentMessage} <a href="${url}" target="_blank">${url}</a>`;
 
             const prNumber = context.payload.pull_request.number;
             const { data: comments } = await github.rest.issues.listComments({
