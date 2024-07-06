@@ -1,0 +1,17 @@
+name: Check linter
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install dependencies
+      uses: ./.github/actions/install-dependencies
+
+    - name: Check linter
+      shell: bash
+      run: |
+        STAGED_FILES=$(git diff --cached --name-only --diff-filter=d)
+        LINTER_FILES=$(echo "$STAGED_FILES" | grep -E '\.(js|jsx|ts|tsx)$' || true)
+        echo "$LINTER_FILES" | xargs pnpm exec next lint --file
+        if [ $? -ne 0 ]; then
+          exit 1
+        fi
