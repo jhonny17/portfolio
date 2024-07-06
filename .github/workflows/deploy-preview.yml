@@ -1,5 +1,4 @@
 name: Deploy preview
-run-name: Deploy preview
 
 on:
   pull_request:
@@ -13,7 +12,8 @@ permissions:
   deployments: write
 
 concurrency:
-  group: deploy-preview-group-lock
+  group: deploy-preview-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   publish:
