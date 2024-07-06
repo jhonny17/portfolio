@@ -8,10 +8,4 @@ runs:
 
     - name: Check linter
       shell: bash
-      run: |
-        STAGED_FILES=$(git diff --cached --name-only --diff-filter=d)
-        LINTER_FILES=$(echo "$STAGED_FILES" | grep -E '\.(js|jsx|ts|tsx)$' || true)
-        echo "$LINTER_FILES" | xargs pnpm exec next lint --file
-        if [ $? -ne 0 ]; then
-          exit 1
-        fi
+      run: pnpm exec next lint
