@@ -9,6 +9,6 @@ runs:
     - name: Install dependencies
       uses: ./.github/actions/install-dependencies
 
-    - name: Build project
+    - name: Check coverage
       shell: bash
-      run: pnpm coverage
+      run: pnpm exec vitest --coverage --watch false
