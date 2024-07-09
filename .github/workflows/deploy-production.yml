@@ -2,10 +2,20 @@ name: Deploy production
 run-name: Deploy production
 
 on:
-  workflow_run:
-    workflows: [Run code checks]
-    types:
-      - completed
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      patch-level:
+        description: 'The maximum patch version to increment'
+        required: false
+        type: choice
+        default: patch
+        options:
+          - patch
+          - minor
+          - major
 
 permissions:
   contents: write
@@ -15,37 +25,15 @@ concurrency:
   group: deploy-production-group-lock
 
 jobs:
-  validate_code_checks:
-    name: Validate pull request
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Notify Valid To Deploy
-        uses: actions/github-script@v7
-        if: ${{ github.event.workflow_run.conclusion == 'success'}}
-        with:
-          github-token: ${{ secrets.PAT_TOKEN }}
-          script: |
-            core.notice('Valid To Deploy');
-
-      - name: Notify Invalid To Deploy
-        uses: actions/github-script@v7
-        if: ${{ github.event.workflow_run.conclusion != 'success'}}
-        with:
-          github-token: ${{ secrets.PAT_TOKEN }}
-          script: |
-            core.error('Invalid To Deploy');
-
-      - name: Fail If Invalid To Deploy
-        if: ${{ github.event.workflow_run.conclusion != 'success'}}
-        run: exit 1
+  run-code-checks:
+    name: Run code checks
+    uses: ./.github/workflows/run-code-checks.yml
+    secrets: inherit
 
   generate-next-version:
     name: Generate next version
     runs-on: ubuntu-latest
-    needs: validate_code_checks
+    needs: run-code-checks
     outputs:
       next_version: ${{ steps.generate-next-version.outputs.next_version }}
     steps:
@@ -61,6 +49,8 @@ jobs:
           github_token: ${{ secrets.PAT_TOKEN }}
           max_patch_version: 10
           max_minor_version: 10
+          increment_minor_version: ${{ github.event.inputs.patch-level == 'minor' }}
+          increment_major_version: ${{ github.event.inputs.patch-level == 'major' }}
 
   create-tag-and-pre-release:
     name: Create tag and pre-release
