@@ -7,7 +7,7 @@ runs:
       uses: actions/checkout@v4
 
     - name: Install dependencies
-      uses: ./.github/actions/install-dependencies
+      uses: jhonnyvargasarias/portfolio/.github/actions/install-dependencies@main
 
     - name: Check coverage
       shell: bash
