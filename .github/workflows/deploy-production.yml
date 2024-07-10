@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       patch-level:
-        description: 'The maximum patch version to increment'
+        description: 'The level of patch version to increment'
         required: false
         type: choice
         default: patch
