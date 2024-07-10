@@ -1,8 +1,4 @@
 {
-  "extends": [
-    "next/core-web-vitals",
-    "prettier",
-    "plugin:markdown/recommended-legacy"
-  ],
+  "extends": ["next/core-web-vitals", "prettier"],
   "ignorePatterns": ["node_modules", "package.json"]
 }
