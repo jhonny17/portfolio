@@ -48,5 +48,5 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
           directory: ${{ secrets.BUILD_OUTPUT_DIRECTORY }}
-          gitHubToken: ${{ secrets.PAT_TOKEN }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ steps.extract_branch.outputs.branch_name }}
