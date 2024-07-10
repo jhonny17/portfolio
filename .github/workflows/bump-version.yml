@@ -16,14 +16,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  debug:
-    name: Debug
-    runs-on: ubuntu-latest
-    steps:
-      - name: Debug
-        run: |
-          echo "Next version: ${{ inputs.next_version }}"
-
   push-next-version:
     name: Push next version
     runs-on: ubuntu-latest
