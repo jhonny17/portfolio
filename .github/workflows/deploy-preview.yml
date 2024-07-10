@@ -18,7 +18,7 @@ concurrency:
 jobs:
   run-code-checks:
     name: Run code checks
-    uses: ./.github/workflows/run-code-checks.yml
+    uses: jhonnyvargasarias/portfolio/.github/workflows/run-code-checks.yml@main
     secrets: inherit
 
   publish:
@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        uses: ./.github/actions/install-dependencies
+        uses: jhonnyvargasarias/portfolio/.github/actions/install-dependencies@main
 
       - name: Build project
         run: pnpm build

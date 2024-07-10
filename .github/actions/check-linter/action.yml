@@ -4,7 +4,7 @@ runs:
   using: 'composite'
   steps:
     - name: Install dependencies
-      uses: ./.github/actions/install-dependencies
+      uses: jhonnyvargasarias/portfolio/.github/actions/install-dependencies@main
 
     - name: Check linter
       shell: bash
