@@ -46,7 +46,7 @@ jobs:
         id: generate-next-version
         uses: jhonnyvargasarias/actions/generate-next-version@main
         with:
-          github_token: ${{ secrets.PAT_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           max_patch_version: 10
           max_minor_version: 10
           increment_minor_version: ${{ github.event.inputs.patch-level == 'minor' }}
@@ -66,7 +66,7 @@ jobs:
         id: create-tag-and-pre-release-step
         uses: jhonnyvargasarias/actions/create-tag-and-pre-release@main
         with:
-          github_token: ${{ secrets.PAT_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           build_version: ${{ needs.generate-next-version.outputs.next_version }}
 
   publish:
@@ -95,7 +95,7 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
           directory: ${{ secrets.BUILD_OUTPUT_DIRECTORY }}
-          gitHubToken: ${{ secrets.PAT_TOKEN }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ steps.extract_branch.outputs.branch_name }}
 
   publish_release_on_sucess:
@@ -127,11 +127,11 @@ jobs:
       - name: Delete release
         uses: jhonnyvargasarias/actions/delete-release@main
         with:
-          github_token: ${{ secrets.PAT_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           release_id: ${{ needs.create-tag-and-pre-release.outputs.release_id }}
 
       - name: Delete tag
         uses: jhonnyvargasarias/actions/delete-tag@main
         with:
-          github_token: ${{ secrets.PAT_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           build_version: ${{ needs.generate-next-version.outputs.next_version }}
