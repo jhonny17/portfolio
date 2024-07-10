@@ -9,8 +9,7 @@ This repository contains the source code for my personal portfolio website. It's
 
 ## Installation
 
-> [!NOTE]
-> [pnpm](https://pnpm.io/) is used as package manager
+> [!NOTE] > [pnpm](https://pnpm.io/) is used as package manager
 
 To get a local copy up and running, follow these simple steps:
 
