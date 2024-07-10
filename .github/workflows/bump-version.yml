@@ -1,0 +1,72 @@
+name: Bump version
+run-name: Bump version
+
+on:
+  workflow_call:
+    inputs:
+      next_version:
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bump-version-group-lock
+  cancel-in-progress: true
+
+jobs:
+  debug:
+    name: Debug
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug
+        run: |
+          echo "Next version: ${{ github.event.inputs.next_version }}"
+
+  push-next-version:
+    name: Push next version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get Token
+        id: get_workflow_token
+        uses: peter-murray/workflow-application-token-action@v3
+        with:
+          application_id: ${{ secrets.ORG_APP_ID }}
+          application_private_key: ${{ secrets.ORG_APP_KEY }}
+
+      - name: Update package.json version and create commit
+        id: check-package-json
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ steps.get_workflow_token.outputs.token }}
+          script: |
+            const { data } = await github.rest.repos.getContent({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              path: 'package.json',
+              ref: context.sha
+            });
+
+            const packageJson = JSON.parse(Buffer.from(data.content, 'base64').toString());
+            const currentVersion = packageJson.version;
+            const nextVersion = '${{ github.event.inputs.next_version }}';
+
+            packageJson.version = nextVersion;
+
+            await github.rest.repos.createOrUpdateFileContents({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              path: 'package.json',
+              message: `Bump version to ${nextVersion}`,
+              content: Buffer.from(JSON.stringify(packageJson, null, 2)).toString('base64'),
+              branch: 'main',
+              sha: data.sha,
+              committer: {
+                name: 'jhonnyvargasarias[bot]',
+                email: '106167787+jhonnyvargasarias[bot]@users.noreply.github.com'
+              }
+            });

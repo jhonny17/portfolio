@@ -1,0 +1,114 @@
+name: On push main
+run-name: On push main
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      patch-level:
+        description: 'The level of patch version to increment'
+        required: false
+        type: choice
+        default: patch
+        options:
+          - patch
+          - minor
+          - major
+
+permissions:
+  contents: write
+  deployments: write
+
+concurrency:
+  group: on-main-push-group-lock
+  cancel-in-progress: true
+
+jobs:
+  generate-next-version:
+    name: Generate next version
+    runs-on: ubuntu-latest
+    outputs:
+      next_version: ${{ steps.generate-next-version.outputs.next_version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Generate next version
+        id: generate-next-version
+        uses: jhonnyvargasarias/actions/generate-next-version@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          max_patch_version: 10
+          max_minor_version: 10
+          increment_minor_version: ${{ github.event.inputs.patch-level == 'minor' }}
+          increment_major_version: ${{ github.event.inputs.patch-level == 'major' }}
+
+  is-package-version-up-to-date:
+    name: Is package version up to date
+    needs: generate-next-version
+    runs-on: ubuntu-latest
+    outputs:
+      is_up_to_date: ${{ steps.check-package-version.outputs.is_up_to_date }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check package.json version
+        id: check-package-version
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { version } = require('./package.json');
+            const nextVersion = '${{ needs.generate-next-version.outputs.next_version }}';
+
+            if (nextVersion.legth === 0) {
+              core.setFailed('Next version is empty');
+              exit(1);
+            }
+
+            core.setOutput('is_up_to_date', version === nextVersion);
+
+  run-code-checks:
+    name: Run code checks
+    uses: jhonnyvargasarias/portfolio/.github/workflows/run-code-checks.yml@main
+    needs: is-package-version-up-to-date
+    if: ${{ needs.is-package-version-up-to-date.outputs.is_up_to_date == 'false' }}
+    secrets: inherit
+
+  debug:
+    name: Debug
+    runs-on: ubuntu-latest
+    needs:
+      - generate-next-version
+      - is-package-version-up-to-date
+      - run-code-checks
+    steps:
+      - name: Debug
+        run: |
+          echo "Next version: ${{ needs.generate-next-version.outputs.next_version }}"
+          echo "Is package version up to date: ${{ needs.is-package-version-up-to-date.outputs.is_up_to_date }}"
+          echo "Patch level: ${{ github.event.inputs.patch-level }}"
+
+  bump-version:
+    name: Bump version
+    uses: jhonnyvargasarias/portfolio/.github/workflows/bump-version.yml@main
+    needs:
+      - generate-next-version
+      - is-package-version-up-to-date
+      - run-code-checks
+    if: ${{ needs.is-package-version-up-to-date.outputs.is_up_to_date == 'false' }}
+    secrets: inherit
+    with:
+      next_version: ${{ needs.generate-next-version.outputs.next_version }}
+
+  deploy_production:
+    name: Deploy to production
+    uses: jhonnyvargasarias/portfolio/.github/workflows/deploy-production.yml@main
+    needs: [generate-next-version, is-package-version-up-to-date]
+    if: ${{ needs.is-package-version-up-to-date.outputs.is_up_to_date == 'true' }}
+    secrets: inherit
+    with:
+      next_version: ${{ needs.generate-next-version.outputs.next_version }}
