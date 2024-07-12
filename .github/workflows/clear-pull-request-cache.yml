@@ -4,6 +4,9 @@ on:
   pull_request:
     types: [closed]
 
+permissions:
+  actions: write
+
 jobs:
   clear_cache:
     runs-on: ubuntu-latest
@@ -12,4 +15,4 @@ jobs:
         uses: jhonnyvargasarias/actions/clear-cache@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          ref: ${{ github.sha }}
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
