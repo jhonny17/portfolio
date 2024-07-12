@@ -1,4 +1,5 @@
 name: On Pull Request Closed
+run-name: 'On Pull Request Closed: #${{ github.event.pull_request.number }}'
 
 on:
   pull_request:
@@ -13,6 +14,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Debug
+        run: |
+          echo "Pull Request Number: ${{ github.event.pull_request.number }}"
 
       - name: Clear Cache
         uses: jhonnyvargasarias/actions/clear-cache@main
