@@ -1,4 +1,4 @@
-name: Clear pull request cache
+name: On Pull Request Closed
 
 on:
   pull_request:
@@ -11,6 +11,9 @@ jobs:
   clear_cache:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Clear Cache
         uses: jhonnyvargasarias/actions/clear-cache@main
         with:
