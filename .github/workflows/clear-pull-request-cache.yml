@@ -15,4 +15,4 @@ jobs:
         uses: jhonnyvargasarias/actions/clear-cache@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+          ref: 'refs/pull/${{ github.event.pull_request.number }}/merge'
