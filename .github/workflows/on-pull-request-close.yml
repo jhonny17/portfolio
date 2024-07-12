@@ -15,13 +15,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Debug
-        run: |
-          echo "Pull Request Number: ${{ github.event.pull_request.number }}"
-          echo "Branch: ${{ github.event.pull_request.head.ref }}"
-
       - name: Clear Cache
         uses: jhonnyvargasarias/actions/clear-cache@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          ref: ${{ github.event.pull_request.head.ref }}
+          ref: 'refs/heads/${{ github.event.pull_request.head.ref }}'
