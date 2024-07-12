@@ -18,9 +18,10 @@ jobs:
       - name: Debug
         run: |
           echo "Pull Request Number: ${{ github.event.pull_request.number }}"
+          echo "Branch: ${{ github.event.pull_request.head.ref }}"
 
       - name: Clear Cache
         uses: jhonnyvargasarias/actions/clear-cache@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          ref: 'refs/pull/${{ github.event.pull_request.number }}/merge'
+          ref: ${{ github.event.pull_request.head.ref }}
