@@ -43,6 +43,8 @@ jobs:
 
       - name: Install dependencies
         uses: jhonnyvargasarias/portfolio/.github/actions/install-dependencies@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build project
         run: pnpm build

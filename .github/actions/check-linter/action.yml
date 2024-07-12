@@ -1,10 +1,17 @@
 name: Check linter
 
+inputs:
+  github-token:
+    description: 'GitHub token'
+    required: true
+
 runs:
   using: 'composite'
   steps:
     - name: Install dependencies
       uses: jhonnyvargasarias/portfolio/.github/actions/install-dependencies@main
+      with:
+        github-token: ${{ inputs.github-token }}
 
     - name: Check linter
       shell: bash

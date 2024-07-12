@@ -1,5 +1,10 @@
 name: Run tests
 
+inputs:
+  github-token:
+    description: 'GitHub token'
+    required: true
+
 runs:
   using: 'composite'
   steps:
@@ -8,6 +13,8 @@ runs:
 
     - name: Install dependencies
       uses: jhonnyvargasarias/portfolio/.github/actions/install-dependencies@main
+      with:
+        github-token: ${{ inputs.github-token }}
 
     - name: Run tests
       shell: bash
