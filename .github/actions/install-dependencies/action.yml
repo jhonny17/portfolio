@@ -1,6 +1,11 @@
 name: 'Install Dependencies'
 description: 'Install project dependencies'
 
+inputs:
+  github-token:
+    description: 'GitHub token'
+    required: true
+
 runs:
   using: 'composite'
   steps:
@@ -12,6 +17,20 @@ runs:
     - name: Install pnpm
       shell: bash
       run: npm install -g pnpm@9.4.0
+
+    - name: Check if pnpm-lock.yaml has changed
+      id: check-pnpm-lock
+      uses: dorny/paths-filter@v3
+      with:
+        filters: |
+          pnpmLock:
+            - 'pnpm-lock.yaml'
+
+    - name: Clear Cache
+      if: steps.check-pnpm-lock.outputs.pnpmLock == 'true'
+      uses: jhonnyvargasarias/actions/clear-cache@main
+      with:
+        github_token: ${{ inputs.github-token }}
 
     - name: Get pnpm store path
       id: pnpm-store-path

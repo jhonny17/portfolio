@@ -21,6 +21,8 @@ jobs:
 
       - name: Check prettier
         uses: jhonnyvargasarias/portfolio/.github/actions/check-prettier@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   check_lint:
     name: Check linter
@@ -32,6 +34,8 @@ jobs:
 
       - name: Check eslint
         uses: jhonnyvargasarias/portfolio/.github/actions/check-linter@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   run_tests:
     name: Run tests
@@ -43,6 +47,8 @@ jobs:
 
       - name: Run tests
         uses: jhonnyvargasarias/portfolio/.github/actions/run-tests@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   check_coverage:
     name: Check coverage
@@ -54,3 +60,5 @@ jobs:
 
       - name: Check coverage
         uses: jhonnyvargasarias/portfolio/.github/actions/check-coverage@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
