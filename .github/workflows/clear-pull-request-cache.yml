@@ -1,0 +1,15 @@
+name: Clear pull request cache
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  clear_cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clear Cache
+        uses: jhonnyvargasarias/actions/clear-cache@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          ref: ${{ github.sha }}
