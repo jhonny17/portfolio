@@ -30,7 +30,7 @@ jobs:
         uses: jhonnyvargasarias/actions/create-tag-and-pre-release@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          build_version: ${{ github.event.inputs.next_version }}
+          build_version: ${{ inputs.next_version }}
 
   publish:
     name: Publish to Cloudflare Pages
@@ -99,4 +99,4 @@ jobs:
         uses: jhonnyvargasarias/actions/delete-tag@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          build_version: ${{ github.event.inputs.next_version }}
+          build_version: ${{ inputs.next_version }}

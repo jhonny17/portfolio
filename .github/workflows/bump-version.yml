@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Debug
         run: |
-          echo "Next version: ${{ github.event.inputs.next_version }}"
+          echo "Next version: ${{ inputs.next_version }}"
 
   push-next-version:
     name: Push next version
@@ -53,7 +53,7 @@ jobs:
 
             const packageJson = JSON.parse(Buffer.from(data.content, 'base64').toString());
             const currentVersion = packageJson.version;
-            const nextVersion = '${{ github.event.inputs.next_version }}';
+            const nextVersion = '${{ inputs.next_version }}';
 
             packageJson.version = nextVersion;
 

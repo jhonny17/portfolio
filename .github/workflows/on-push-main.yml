@@ -64,7 +64,7 @@ jobs:
             const { version } = require('./package.json');
             const nextVersion = '${{ needs.generate-next-version.outputs.next_version }}';
 
-            if (nextVersion.legth === 0) {
+            if (nextVersion.length === 0) {
               core.setFailed('Next version is empty');
               exit(1);
             }
