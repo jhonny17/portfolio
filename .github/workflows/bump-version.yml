@@ -53,7 +53,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               path: 'package.json',
-              message: `Bump version to ${nextVersion}`,
+              message: `v${nextVersion}`,
               content: Buffer.from(JSON.stringify(packageJson, null, 2)).toString('base64'),
               branch: 'main',
               sha: data.sha,
