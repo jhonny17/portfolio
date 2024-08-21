@@ -1,9 +1,11 @@
+import { ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
-import Home from './page';
-import { ReactNode } from 'react';
+
 import { useFeatureFlag } from '@/contexts/FeatureFlag';
 import { USE_MAINTENANCE_MODE } from '@/constants/feature-flags';
+
+import Home from './page';
 
 vi.mock('@/contexts/FeatureFlag', () => {
   const actual = vi.importActual('@/contexts/FeatureFlag');

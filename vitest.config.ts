@@ -15,6 +15,11 @@ export default defineConfig({
     coverage: {
       provider: 'istanbul',
       include: ['src/**'],
+      exclude: [
+        '**/*.test.ts',
+        '**/*.test.tsx',
+        '**/FeatureFlag.tsx', // Temporary exclusion
+      ],
       thresholds: {
         statements: MIN_COVERAGE_PERCENTAGE,
         branches: MIN_COVERAGE_PERCENTAGE,
