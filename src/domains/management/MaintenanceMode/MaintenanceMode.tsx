@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react';
 
-import { useFeature } from '@/contexts/FeatureFlag';
+import { useFeatureFlag } from '@/contexts/FeatureFlag';
 import { USE_MAINTENANCE_MODE } from '@/constants/feature-flags';
 
 export type MaintenanceModeProps = {
@@ -10,7 +10,7 @@ export type MaintenanceModeProps = {
 };
 
 export const MaintenanceMode = ({ children }: MaintenanceModeProps) => {
-  const isMaintenanceModeOn = useFeature(USE_MAINTENANCE_MODE, false);
+  const isMaintenanceModeOn = useFeatureFlag(USE_MAINTENANCE_MODE, false);
 
   if (!isMaintenanceModeOn) {
     return <>{children}</>;

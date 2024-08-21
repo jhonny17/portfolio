@@ -6,7 +6,7 @@ export default function Home() {
     <FeatureFlagProvider>
       <MaintenanceMode>
         <div>
-          <h1>Hey this is the content</h1>
+          <h1>Real Content</h1>
         </div>
       </MaintenanceMode>
     </FeatureFlagProvider>

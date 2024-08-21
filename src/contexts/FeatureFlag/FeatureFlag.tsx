@@ -12,7 +12,7 @@ export type FeatureFlagProviderProps = {
   children?: ReactNode;
 };
 
-export const useFeature = <T extends JSONValue>(
+export const useFeatureFlag = <T extends JSONValue>(
   key: string,
   defaultValue: T,
 ): T => {
