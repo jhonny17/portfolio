@@ -18,19 +18,19 @@ runs:
       shell: bash
       run: npm install -g pnpm@9.4.0
 
-    - name: Check if pnpm-lock.yaml has changed
-      id: check-pnpm-lock
-      uses: dorny/paths-filter@v3
-      with:
-        filters: |
-          pnpmLock:
-            - 'pnpm-lock.yaml'
+    # - name: Check if pnpm-lock.yaml has changed
+    #   id: check-pnpm-lock
+    #   uses: dorny/paths-filter@v3
+    #   with:
+    #     filters: |
+    #       pnpmLock:
+    #         - 'pnpm-lock.yaml'
 
-    - name: Clear Cache
-      if: steps.check-pnpm-lock.outputs.pnpmLock == 'true'
-      uses: jhonnyvargasarias/actions/clear-cache@main
-      with:
-        github_token: ${{ inputs.github-token }}
+    # - name: Clear Cache
+    #   if: steps.check-pnpm-lock.outputs.pnpmLock == 'true'
+    #   uses: jhonnyvargasarias/actions/clear-cache@main
+    #   with:
+    #     github_token: ${{ inputs.github-token }}
 
     - name: Get pnpm store path
       id: pnpm-store-path
