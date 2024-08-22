@@ -1,5 +1,14 @@
-import { MaintenanceMode } from '@/domains/site-management';
+import { MaintenanceMode } from '@/domains/management';
+import { FeatureFlagProvider } from '@/contexts';
 
 export default function Home() {
-  return <MaintenanceMode />;
+  return (
+    <FeatureFlagProvider>
+      <MaintenanceMode>
+        <div>
+          <h1>Real Content</h1>
+        </div>
+      </MaintenanceMode>
+    </FeatureFlagProvider>
+  );
 }
