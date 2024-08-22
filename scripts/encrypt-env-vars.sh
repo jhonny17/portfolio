@@ -17,7 +17,7 @@ if [[ "$PARAM" != "development" && "$PARAM" != "staging" && "$PARAM" != "product
 fi
 
 SOURCE_FILE=".env.${PARAM}.local"
-DEST_FILE=".env.${PARAM}"
+DEST_FILE=".env.${PARAM}.encrypted"
 
 # Check if the source file exists
 if [ ! -f "$SOURCE_FILE" ]; then
@@ -26,4 +26,4 @@ if [ ! -f "$SOURCE_FILE" ]; then
 fi
 
 # Encrypt the source file
-AWS_PROFILE="personal" sops encrypt $SOURCE_FILE > $DEST_FILE
+sops encrypt $SOURCE_FILE > $DEST_FILE

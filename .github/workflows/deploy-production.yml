@@ -45,6 +45,22 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Setup SOPS
+        uses: nhedger/setup-sops@v2
+
+      - name: Run SOPS
+        run: |
+          sops --version
+
+      - name: Prepare variables
+        run: |
+          sops --output .env.local --decrypt .env.production.encrypted
+        env:
+          SOPS_KMS_ARN: ${{ secrets.SOPS_KMS_ARN}}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+
       - name: Build project
         run: pnpm build
 
