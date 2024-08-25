@@ -6,12 +6,12 @@
   body {
     @apply bg-neutral-950;
 
-    & * {
+    * {
       @apply text-emerald-600;
+    }
 
-      &:focus {
-        @apply outline-none outline-emerald-500;
-      }
+    *:focus {
+      @apply outline-none outline-emerald-500;
     }
   }
 }
