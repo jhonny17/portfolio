@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, expect, it, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 
 import { useFeatureFlag } from '@/contexts/FeatureFlag';
@@ -16,24 +16,22 @@ vi.mock('@/contexts/FeatureFlag', () => {
   };
 });
 
-describe('Home', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
+beforeEach(() => {
+  vi.clearAllMocks();
+});
 
-  it(`renders the content when the '${USE_MAINTENANCE_MODE}' flag is false`, async () => {
-    vi.mocked(useFeatureFlag).mockReturnValue(false);
-    render(<Home />);
-    expect(screen.getByText('Real Content')).toBeInTheDocument();
-  });
+it(`renders the content when the '${USE_MAINTENANCE_MODE}' flag is false`, async () => {
+  vi.mocked(useFeatureFlag).mockReturnValue(false);
+  render(<Home />);
+  expect(screen.getByText('Real Content')).toBeInTheDocument();
+});
 
-  it(`renders the maintenance mode when the '${USE_MAINTENANCE_MODE}' flag is true`, async () => {
-    vi.mocked(useFeatureFlag).mockReturnValue(true);
-    render(<Home />);
-    await waitFor(() => {
-      expect(
-        screen.getByText('This page is currently under development.'),
-      ).toBeInTheDocument();
-    });
+it(`renders the maintenance mode when the '${USE_MAINTENANCE_MODE}' flag is true`, async () => {
+  vi.mocked(useFeatureFlag).mockReturnValue(true);
+  render(<Home />);
+  await waitFor(() => {
+    expect(
+      screen.getByText('This page is currently under development.'),
+    ).toBeInTheDocument();
   });
 });
