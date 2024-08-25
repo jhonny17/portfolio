@@ -4,7 +4,15 @@
 
 @layer base {
   body {
-    @apply text-white dark:bg-gray-950;
+    @apply bg-neutral-950;
+
+    * {
+      @apply text-emerald-600;
+    }
+
+    *:focus {
+      @apply outline-none outline-emerald-500;
+    }
   }
 }
 
