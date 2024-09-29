@@ -69,15 +69,12 @@ jobs:
         run: |
           echo "branch_name=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
 
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
-          directory: ${{ secrets.BUILD_OUTPUT_DIRECTORY }}
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ steps.extract_branch.outputs.branch_name }}
+          command: pages deploy ${{ secrets.BUILD_OUTPUT_DIRECTORY }} --project-name=${{ secrets.CLOUDFLARE_PROJECT_NAME }}
 
   publish_release_on_sucess:
     name: Publish Release on Success
