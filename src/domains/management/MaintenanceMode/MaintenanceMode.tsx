@@ -1,16 +1,17 @@
-'use client';
-
 import { ReactNode } from 'react';
 
-import { useFeatureFlag } from '@/contexts/FeatureFlag';
+import { getFeatureFlag } from '@/utils/FeatureFlag';
 import { USE_MAINTENANCE_MODE } from '@/constants/feature-flags';
 
 export type MaintenanceModeProps = {
   children?: ReactNode;
 };
 
-export const MaintenanceMode = ({ children }: MaintenanceModeProps) => {
-  const isMaintenanceModeOn = useFeatureFlag(USE_MAINTENANCE_MODE, false);
+export const MaintenanceMode = async ({ children }: MaintenanceModeProps) => {
+  const isMaintenanceModeOn = await getFeatureFlag<boolean>(
+    USE_MAINTENANCE_MODE,
+    false,
+  );
 
   if (!isMaintenanceModeOn) {
     return <>{children}</>;
