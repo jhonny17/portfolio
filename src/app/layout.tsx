@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 
 import { Layout } from '@/components';
-import { FeatureFlagProvider } from '@/contexts';
 import { MaintenanceMode } from '@/domains/management';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -34,11 +33,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <FeatureFlagProvider>
-          <MaintenanceMode>
-            <Layout>{children}</Layout>
-          </MaintenanceMode>
-        </FeatureFlagProvider>
+        <MaintenanceMode>
+          <Layout>{children}</Layout>
+        </MaintenanceMode>
       </body>
     </html>
   );

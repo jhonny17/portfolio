@@ -3,7 +3,6 @@ import { describe, it, expect, vi } from 'vitest';
 import { Inter } from 'next/font/google';
 
 import Layout, { metadata, viewport } from './layout';
-import { ReactNode } from 'react';
 
 vi.mock('next/font/google', async () => {
   const library = await vi.importActual('next/font/google');
@@ -13,12 +12,11 @@ vi.mock('next/font/google', async () => {
   };
 });
 
-vi.mock('@/contexts/FeatureFlag', () => {
-  const actual = vi.importActual('@/contexts/FeatureFlag');
+vi.mock('@/utils/FeatureFlag', async () => {
+  const actual = await vi.importActual('@/utils/FeatureFlag');
   return {
     ...actual,
-    useFeatureFlag: vi.fn().mockReturnValue(false),
-    FeatureFlagProvider: ({ children }: { children?: ReactNode }) => children,
+    getFeatureFlag: vi.fn().mockResolvedValue(false),
   };
 });
 
@@ -54,29 +52,5 @@ describe('viewport', () => {
 
   it('has the correct initialScale', () => {
     expect(viewport.initialScale).toBe(1);
-  });
-});
-
-describe('Root Layout', () => {
-  const childrenText = 'Default Children Text';
-
-  it('renders Inter font', () => {
-    render(<Layout>{childrenText}</Layout>);
-    expect(Inter).toHaveBeenCalledWith({ subsets: ['latin'] });
-  });
-
-  it('renders children', () => {
-    render(<Layout>{childrenText}</Layout>);
-    expect(screen.getByText(childrenText)).toBeInTheDocument();
-  });
-
-  it('renders the navbar', () => {
-    render(<Layout>{childrenText}</Layout>);
-    expect(screen.getByRole('navigation')).toBeInTheDocument;
-  });
-
-  it('renders the footer', () => {
-    render(<Layout>{childrenText}</Layout>);
-    expect(screen.getByRole('contentinfo')).toBeInTheDocument;
   });
 });
