@@ -13,13 +13,11 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
     coverage: {
+      all: true,
+      cleanOnRerun: true,
       provider: 'istanbul',
       include: ['src/**'],
-      exclude: [
-        '**/*.test.ts',
-        '**/*.test.tsx',
-        '**/FeatureFlag.tsx', // Temporary exclusion
-      ],
+      exclude: ['**/*.test.ts', '**/*.test.tsx', 'src/app/layout.tsx'],
       thresholds: {
         statements: MIN_COVERAGE_PERCENTAGE,
         branches: MIN_COVERAGE_PERCENTAGE,
