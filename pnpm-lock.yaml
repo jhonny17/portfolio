@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@growthbook/growthbook-react':
-        specifier: ^1.2.0
-        version: 1.2.0(react@18.3.1)
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -338,16 +335,6 @@ packages:
   '@eslint/js@8.57.0':
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-
-  '@growthbook/growthbook-react@1.2.0':
-    resolution: {integrity: sha512-6VSs7n+B73ihfiPbUDHGBxPn6en3NNYGe5jSlMT22nBt+iWMNwOBzdnMgGGxDsQaVJ9oAcq8RXEC75w56tF8Hg==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      react: ^16.8.0-0 || ^17.0.0-0 || ^18.0.0-0
-
-  '@growthbook/growthbook@1.2.0':
-    resolution: {integrity: sha512-lL47UKvzUaUq2QLwiePrUbM/p+NPv6WUGrGs2bjw1Zc51dtNtxAD+s1hXEU9wpAF913kbiOW2+yRa67UhxSkuw==}
-    engines: {node: '>=10'}
 
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
@@ -999,10 +986,6 @@ packages:
 
   dom-accessibility-api@0.6.3:
     resolution: {integrity: sha512-7ZgogeTnjuHbo+ct10G9Ffp0mif17idi0IyWNVA/wcwcm7NPOD/WEHVP3n7n3MhXqxoIYm8d6MuZohYWIZ4T3w==}
-
-  dom-mutator@0.6.0:
-    resolution: {integrity: sha512-iCt9o0aYfXMUkz/43ZOAUFQYotjGB+GNbYJiJdz4TgXkyToXbbRy5S6FbTp72lRBtfpUMwEc1KmpFEU4CZeoNg==}
-    engines: {node: '>=10'}
 
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
@@ -2732,15 +2715,6 @@ snapshots:
 
   '@eslint/js@8.57.0': {}
 
-  '@growthbook/growthbook-react@1.2.0(react@18.3.1)':
-    dependencies:
-      '@growthbook/growthbook': 1.2.0
-      react: 18.3.1
-
-  '@growthbook/growthbook@1.2.0':
-    dependencies:
-      dom-mutator: 0.6.0
-
   '@humanwhocodes/config-array@0.11.14':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
@@ -3417,8 +3391,6 @@ snapshots:
   dom-accessibility-api@0.5.16: {}
 
   dom-accessibility-api@0.6.3: {}
-
-  dom-mutator@0.6.0: {}
 
   eastasianwidth@0.2.0: {}
 
