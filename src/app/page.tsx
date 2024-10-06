@@ -1,7 +1,12 @@
+import cx from 'classnames';
+import GitHubCalendar from 'react-github-calendar';
+
+const username = process.env.NEXT_PUBLIC_GITHUB_USERNAME;
+
 export default function Home() {
   return (
-    <div>
-      <h1>Real Content</h1>
+    <div className={cx('grid', 'justify-center')}>
+      <GitHubCalendar username={username} />
     </div>
   );
 }
