@@ -43,7 +43,7 @@ runs:
     - name: Prepare variables
       shell: bash
       run: |
-        sops --output .env.local --decrypt .env.staging.encrypted
+        sops --output .env.local --decrypt .env.test.encrypted
       env:
         SOPS_KMS_ARN: ${{ inputs.sops-kms-arn }}
         AWS_ACCESS_KEY_ID: ${{ inputs.aws-access-key-id }}
