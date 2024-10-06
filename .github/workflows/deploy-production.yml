@@ -54,7 +54,7 @@ jobs:
 
       - name: Prepare variables
         run: |
-          sops --output .env.local --decrypt .env.production.encrypted
+          sops --output .env --decrypt .env.production.encrypted
         env:
           SOPS_KMS_ARN: ${{ secrets.SOPS_KMS_ARN}}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
