@@ -49,6 +49,10 @@ jobs:
         uses: jhonnyvargasarias/portfolio/.github/actions/run-tests@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          sops-kms-arn: ${{ secrets.SOPS_KMS_ARN }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-default-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
   check_coverage:
     name: Check coverage

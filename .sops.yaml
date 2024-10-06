@@ -1,6 +1,8 @@
 creation_rules:
   - path_regex: .env.development
     kms: 'arn:aws:kms:us-east-1:533267066355:alias/portfolio/staging'
+  - path_regex: .env.test
+    kms: 'arn:aws:kms:us-east-1:533267066355:alias/portfolio/staging'
   - path_regex: .env.staging
     kms: 'arn:aws:kms:us-east-1:533267066355:alias/portfolio/staging'
   - path_regex: .env.production

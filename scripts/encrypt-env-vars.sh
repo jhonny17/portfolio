@@ -10,9 +10,9 @@ fi
 PARAM=$1
 
 # Validate the parameter
-if [[ "$PARAM" != "development" && "$PARAM" != "staging" && "$PARAM" != "production" ]]; then
+if [[ "$PARAM" != "development" && "$PARAM" != "staging" && "$PARAM" != "production" && "$PARAM" != "test" ]]; then
   echo "Error: Invalid parameter '$PARAM'."
-  echo "Allowed values are 'development', 'staging', or 'production'."
+  echo "Allowed values are 'development', 'test', 'staging', or 'production'."
   exit 1
 fi
 
