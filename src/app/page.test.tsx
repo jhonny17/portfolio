@@ -1,5 +1,4 @@
 import { beforeEach, expect, it, vi } from 'vitest';
-import GitHubCalendar from 'react-github-calendar';
 import { render, screen } from '@testing-library/react';
 
 import Home from './page';
@@ -9,8 +8,6 @@ vi.mock('react-github-calendar', () => ({
     return <div>{username}</div>;
   }),
 }));
-
-const mockedGitHubCalendar = vi.mocked(GitHubCalendar);
 
 beforeEach(() => {
   vi.clearAllMocks();
