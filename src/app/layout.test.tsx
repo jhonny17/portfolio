@@ -61,22 +61,22 @@ describe('Root Layout', () => {
   const childrenText = 'Default Children Text';
 
   it('renders Inter font', () => {
-    render(<Layout>{childrenText}</Layout>);
+    render(<Layout>{childrenText}</Layout>, { container: document });
     expect(Inter).toHaveBeenCalledWith({ subsets: ['latin'] });
   });
 
   it('renders children', () => {
-    render(<Layout>{childrenText}</Layout>);
+    render(<Layout>{childrenText}</Layout>, { container: document });
     expect(screen.getByText(childrenText)).toBeInTheDocument();
   });
 
   it('renders the navbar', () => {
-    render(<Layout>{childrenText}</Layout>);
+    render(<Layout>{childrenText}</Layout>, { container: document });
     expect(screen.getByRole('navigation')).toBeInTheDocument;
   });
 
   it('renders the footer', () => {
-    render(<Layout>{childrenText}</Layout>);
+    render(<Layout>{childrenText}</Layout>, { container: document });
     expect(screen.getByRole('contentinfo')).toBeInTheDocument;
   });
 });

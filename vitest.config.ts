@@ -13,7 +13,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
     coverage: {
-      provider: 'istanbul',
+      provider: 'v8',
       include: ['src/**'],
       exclude: [
         '**/*.test.ts',
