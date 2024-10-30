@@ -1,0 +1,51 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`matches the snapshot 1`] = `
+<DocumentFragment>
+  <section
+    class="grid sm:grid-cols-[1fr,auto] lg:grid-cols-[1fr,1fr] items-center w-full relative overflow-hidden"
+  >
+    <div
+      class="z-[-1] absolute inset-0 h-full sm:w-6/12 mt-auto mx-auto sm:ml-0 sm:my-auto sm:mr-auto blur-3xl sm:rounded-r-full bg-gradient-to-r from-emerald-900 from-0% to-emerald-800 to-100%"
+    />
+    <div
+      class="p-8 order-2 sm:order-1"
+    >
+      <div
+        class="p-4 md:p-8 shadow-lg rounded-lg backdrop-sepia-0 backdrop-blur-sm bg-slate-950/40 grid mx-auto sm:w-[390px] md:w-[450px]"
+      >
+        <div
+          class="mb-2 text-center *:text-gray-400"
+        >
+          <h1
+            class="font-logo text-2xl mb-1"
+          >
+            Jhonny Vargas Arias
+          </h1>
+          <div
+            class="text-sm"
+          >
+            Software Engineer
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="order-1 sm:order-2 bg-neutral-950 sm:bg-transparent"
+    >
+      <img
+        alt="Jhonny Vargas Arias"
+        class="aspect-square ml-auto mt-8"
+        data-nimg="1"
+        decoding="async"
+        height="300"
+        loading="lazy"
+        src="/_next/image?url=%2Fsrc%2Fassets%2Fimages%2Fprofile_photo_gray.webp&w=640&q=75"
+        srcset="/_next/image?url=%2Fsrc%2Fassets%2Fimages%2Fprofile_photo_gray.webp&w=384&q=75 1x, /_next/image?url=%2Fsrc%2Fassets%2Fimages%2Fprofile_photo_gray.webp&w=640&q=75 2x"
+        style="color: transparent;"
+        width="300"
+      />
+    </div>
+  </section>
+</DocumentFragment>
+`;
