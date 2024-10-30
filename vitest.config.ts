@@ -14,11 +14,10 @@ export default defineConfig({
     setupFiles: ['./vitest.setup.ts'],
     coverage: {
       provider: 'v8',
-      include: ['src/**'],
-      exclude: [
-        '**/*.test.ts',
-        '**/*.test.tsx',
-        '**/FeatureFlag.tsx', // Temporary exclusion
+      include: [
+        'src/**/*.{ts,tsx}',
+        '!src/**/*.d.ts',
+        '!src/**/*.test.{ts,tsx}',
       ],
       thresholds: {
         statements: MIN_COVERAGE_PERCENTAGE,

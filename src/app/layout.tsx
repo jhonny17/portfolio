@@ -1,10 +1,18 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Orbitron } from 'next/font/google';
+import cx from 'classnames';
+
 import './globals.css';
 
 import { Layout } from '@/components/Layout';
 
 const inter = Inter({ subsets: ['latin'] });
+
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  variable: '--font-logo',
+  weight: ['400', '500', '600', '700', '800', '900'],
+});
 
 export const metadata: Metadata = {
   title: 'Jhonny Vargas Arias | Portfolio',
@@ -31,7 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={cx(inter.className, orbitron.variable)}>
         <Layout>{children}</Layout>
       </body>
     </html>
