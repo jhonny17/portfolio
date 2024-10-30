@@ -7,37 +7,40 @@ export type NavbarProps = {};
 
 export function Navbar({}: NavbarProps) {
   return (
-    <nav
-      className={cx(
-        'flex',
-        'items-center',
-        'min-h-14',
-        'px-2',
-        'md:px-8',
-        'shadow',
-        'shadow-emerald-500',
-      )}
-    >
-      <Link
-        href="/"
+    <nav className={cx('w-full', 'max-w-8xl', 'mx-auto')}>
+      <div
         className={cx(
           'flex',
           'items-center',
-          'p-2',
-          'rounded',
-          'text-lg',
-          'text-emerald-500',
-          'hover:bg-neutral-900',
-          'select-none',
+          'min-h-14',
+          'px-2',
+          'md:px-8',
+          '2xl:px-0',
         )}
       >
-        Portfolio
-      </Link>
-      <ul className={cx('ml-auto', 'flex', 'gap-2')}>
-        <li>
-          <NavLink href="/">Home</NavLink>
-        </li>
-      </ul>
+        <Link
+          href="/"
+          className={cx(
+            'flex',
+            'items-center',
+            'p-2',
+            'rounded',
+            'text-lg',
+            'text-emerald-500',
+            'select-none',
+            'font-logo',
+            'font-semibold',
+            'text-xl',
+          )}
+        >
+          JVA
+        </Link>
+        <ul className={cx('ml-auto', 'flex', 'gap-2')}>
+          <li>
+            <NavLink href="/">Home</NavLink>
+          </li>
+        </ul>
+      </div>
     </nav>
   );
 }

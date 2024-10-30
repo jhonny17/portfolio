@@ -10,7 +10,16 @@ export type LayoutProps = {
 
 export function Layout({ children }: LayoutProps) {
   return (
-    <div className={cx('flex', 'flex-col', 'h-dvh', 'max-h-dvh', 'min-h-dvh')}>
+    <div
+      className={cx(
+        'flex',
+        'flex-col',
+        'min-w-80',
+        'h-dvh',
+        'max-h-dvh',
+        'min-h-dvh',
+      )}
+    >
       <Navbar />
       <div
         className={cx(
@@ -25,17 +34,7 @@ export function Layout({ children }: LayoutProps) {
           'overflow-y-auto',
         )}
       >
-        <main
-          className={cx(
-            'w-full',
-            'px-2',
-            'py-8',
-            'md:p-8',
-            '2xl:px-0',
-            'max-w-8xl',
-            'relative',
-          )}
-        >
+        <main className={cx('w-full', 'max-w-8xl', 'relative')}>
           {children}
         </main>
         <Footer />

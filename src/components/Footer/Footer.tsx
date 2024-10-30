@@ -13,8 +13,6 @@ export const Footer = () => {
         'bg-neutral-950',
         'p-2',
         'md:px-8',
-        'shadow-top',
-        'shadow-gray-600',
       )}
     >
       <div className="flex flex-col items-center justify-center h-full">
