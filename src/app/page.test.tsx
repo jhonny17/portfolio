@@ -3,19 +3,13 @@ import { render, screen } from '@testing-library/react';
 
 import Home from './page';
 
-vi.mock('react-github-calendar', () => ({
-  default: vi.fn().mockImplementation(({ username }) => {
-    return <div>{username}</div>;
-  }),
-}));
-
 beforeEach(() => {
   vi.clearAllMocks();
 });
 
-it('renders GitHubCalendar', async () => {
+it('renders the profile', () => {
   render(<Home />);
   expect(
-    screen.getByText(process.env.NEXT_PUBLIC_GITHUB_USERNAME),
+    screen.getByRole('heading', { name: /Jhonny Vargas Arias/i, level: 1 }),
   ).toBeInTheDocument();
 });
