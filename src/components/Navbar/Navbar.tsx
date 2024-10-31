@@ -1,7 +1,9 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import cx from 'classnames';
 
 import { NavLink } from '../NavLink';
+import logo from '@/assets/images/logo.webp';
 
 export type NavbarProps = {};
 
@@ -22,6 +24,7 @@ export function Navbar({}: NavbarProps) {
           href="/"
           className={cx(
             'flex',
+            'gap-2',
             'items-center',
             'p-2',
             'rounded',
@@ -34,6 +37,7 @@ export function Navbar({}: NavbarProps) {
           )}
         >
           JVA
+          <Image src={logo} alt="JVA" width={18} height={18} />
         </Link>
         <ul className={cx('ml-auto', 'flex', 'gap-2')}>
           <li>
