@@ -10,6 +10,7 @@ vi.mock('next/font/google', async () => {
   return {
     ...library,
     Inter: vi.fn().mockImplementation((param) => param),
+    Orbitron: vi.fn().mockImplementation((param) => param),
   };
 });
 
@@ -61,6 +62,11 @@ describe('Root Layout', () => {
   const childrenText = 'Default Children Text';
 
   it('renders Inter font', () => {
+    render(<Layout>{childrenText}</Layout>, { container: document });
+    expect(Inter).toHaveBeenCalledWith({ subsets: ['latin'] });
+  });
+
+  it('renders Orbitron font', () => {
     render(<Layout>{childrenText}</Layout>, { container: document });
     expect(Inter).toHaveBeenCalledWith({ subsets: ['latin'] });
   });

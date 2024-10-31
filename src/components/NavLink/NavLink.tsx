@@ -13,11 +13,10 @@ export const NavLink = ({ href, children }: NavbarItemProps) => {
       href={href}
       className={cx(
         'tracking-wider',
-        'text-sm',
         'p-2',
         'rounded',
         'text-emerald-500',
-        'hover:bg-neutral-800',
+        'hover:bg-neutral-900',
         'font-mono',
         'flex',
         'align-middle',

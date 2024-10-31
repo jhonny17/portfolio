@@ -11,7 +11,7 @@ it('should render the navbar', () => {
 it('should render the logo', () => {
   render(<Navbar />);
 
-  const logo = screen.getByRole('link', { name: /portfolio/i });
+  const logo = screen.getByRole('link', { name: /JVA/i });
   expect(logo).toBeInTheDocument();
   expect(logo).toHaveAttribute('href', '/');
 });
