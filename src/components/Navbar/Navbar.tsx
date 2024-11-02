@@ -37,7 +37,7 @@ export function Navbar({}: NavbarProps) {
           )}
         >
           JVA
-          <Image src={logo} alt="JVA" width={18} height={18} />
+          <Image src={logo} alt="JVA logo" width={18} height={18} />
         </Link>
         <ul className={cx('ml-auto', 'flex', 'gap-2')}>
           <li>

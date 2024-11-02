@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Orbitron } from 'next/font/google';
+
 import cx from 'classnames';
 
-import './globals.css';
-
 import { Layout } from '@/components/Layout';
+
+import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 

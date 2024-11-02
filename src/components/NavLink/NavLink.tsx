@@ -21,6 +21,9 @@ export const NavLink = ({ href, children }: NavbarItemProps) => {
         'flex',
         'align-middle',
         'select-none',
+        'transition-colors',
+        'duration-300',
+        'ease-in-out',
       )}
     >
       {children}
