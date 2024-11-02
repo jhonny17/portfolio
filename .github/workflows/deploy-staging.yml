@@ -43,6 +43,7 @@ jobs:
           sops --version
 
       - name: Prepare variables
+        continue-on-error: true
         run: |
           sops --output .env --decrypt .env.staging.encrypted
         env:
