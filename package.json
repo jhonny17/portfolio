@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@next/env": "15.0.2",
+    "@tabler/icons-react": "^3.21.0",
     "classnames": "^2.5.1",
     "next": "15.0.2",
     "react": "19.0.0-rc-65a56d0e-20241020",
