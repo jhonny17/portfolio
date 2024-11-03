@@ -1,0 +1,9 @@
+{
+  "navItems": [
+    {
+      "id": 1,
+      "name": "Home",
+      "url": "/"
+    }
+  ]
+}
