@@ -2,12 +2,16 @@ import Link from 'next/link';
 import Image from 'next/image';
 import cx from 'classnames';
 
-import { NavLink } from '../NavLink';
 import logo from '@/assets/images/logo.webp';
+import { getNavItems } from '@/data/navItems/getNavItems';
+
+import { NavLink } from '../NavLink';
 
 export type NavbarProps = {};
 
 export function Navbar({}: NavbarProps) {
+  const navItems = getNavItems();
+
   return (
     <nav className={cx('w-full', 'max-w-8xl', 'mx-auto')}>
       <div
@@ -37,12 +41,22 @@ export function Navbar({}: NavbarProps) {
           )}
         >
           JVA
-          <Image src={logo} alt="JVA logo" width={18} height={18} />
+          <Image
+            src={logo}
+            width={16}
+            height={16}
+            alt="JVA logo"
+            decoding="async"
+            className="aspect-square"
+          />
         </Link>
+
         <ul className={cx('ml-auto', 'flex', 'gap-2')}>
-          <li>
-            <NavLink href="/">Home</NavLink>
-          </li>
+          {navItems.map(({ id, url, name }) => (
+            <li key={id}>
+              <NavLink href={url}>{name}</NavLink>
+            </li>
+          ))}
         </ul>
       </div>
     </nav>

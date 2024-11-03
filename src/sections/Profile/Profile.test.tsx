@@ -7,7 +7,7 @@ it('renders the profile section', () => {
   render(<Profile />);
 
   const profileSection = screen.getByRole('heading', {
-    level: 1,
+    level: 2,
     name: /Jhonny Vargas Arias/i,
   });
 

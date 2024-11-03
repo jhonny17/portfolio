@@ -3,7 +3,8 @@ import Image from 'next/image';
 
 import profilePicture from '@/assets/images/profile_photo_gray.webp';
 
-import { Card } from '@/components/Card';
+import { Card } from '@/components/ui/Card';
+import { GlowBackdrop } from '@/components/ui/GlowBackdrop';
 
 export const Profile = () => {
   return (
@@ -18,34 +19,25 @@ export const Profile = () => {
         'overflow-hidden',
       )}
     >
-      <div
+      <GlowBackdrop
         className={cx(
-          'z-[-1]',
-          'absolute',
-          'inset-0',
           'h-full',
-          'sm:w-6/12',
+          'sm:w-7/12',
           'mt-auto',
           'mx-auto',
           'sm:ml-0',
-          'sm:my-auto',
           'sm:mr-auto',
-          'blur-3xl',
+          'sm:my-auto',
           'sm:rounded-r-full',
-          'bg-gradient-to-r',
-          'from-emerald-900',
-          'from-0%',
-          'to-emerald-800',
-          'to-100%',
         )}
       />
 
       <div className={cx('p-8', 'order-2', 'sm:order-1')}>
         <Card className={cx('grid', 'mx-auto', 'sm:w-[390px]', 'md:w-[450px]')}>
           <div className={cx('mb-2', 'text-center', '*:text-gray-400')}>
-            <h1 className={cx('font-logo', 'text-2xl', 'mb-1')}>
+            <h2 className={cx('font-logo', 'text-2xl', 'mb-1')}>
               Jhonny Vargas Arias
-            </h1>
+            </h2>
             <div className="text-sm">Software Engineer</div>
           </div>
         </Card>
@@ -65,7 +57,13 @@ export const Profile = () => {
           width={300}
           height={300}
           decoding="async"
-          className={cx('aspect-square', 'ml-auto', 'mt-8')}
+          className={cx(
+            'aspect-square',
+            'ml-auto',
+            'mt-8',
+            'w-[180px]',
+            'md:w-[300px]',
+          )}
         />
       </div>
     </section>
