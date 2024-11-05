@@ -34,7 +34,7 @@ export const Profile = () => {
 
       <div className={cx('p-8', 'order-2', 'sm:order-1')}>
         <Card className={cx('grid', 'mx-auto', 'sm:w-[390px]', 'md:w-[450px]')}>
-          <div className={cx('mb-2', 'text-center', '*:text-gray-400')}>
+          <div className={cx('mb-2', 'text-center')}>
             <h2 className={cx('font-logo', 'text-2xl', 'mb-1')}>
               Jhonny Vargas Arias
             </h2>

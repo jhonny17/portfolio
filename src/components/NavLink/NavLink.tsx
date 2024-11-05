@@ -1,6 +1,8 @@
+'use client';
+import cx from 'classnames';
 import Link from 'next/link';
 import { ReactNode } from 'react';
-import cx from 'classnames';
+import { usePathname } from 'next/navigation';
 
 export type NavbarItemProps = {
   href: string;
@@ -8,22 +10,30 @@ export type NavbarItemProps = {
 };
 
 export const NavLink = ({ href, children }: NavbarItemProps) => {
+  const currentPath = usePathname();
+
+  const isCurrentPath = currentPath === href;
+
   return (
     <Link
       href={href}
       className={cx(
-        'tracking-wider',
         'p-2',
-        'rounded',
-        'text-emerald-500',
-        'hover:bg-neutral-900',
-        'font-mono',
         'flex',
-        'align-middle',
-        'select-none',
-        'transition-colors',
-        'duration-300',
+        'rounded',
+        'font-mono',
         'ease-in-out',
+        'select-none',
+        'align-middle',
+        'duration-300',
+        'transition-colors',
+        'underline-offset-4',
+        'hover:text-emerald-500',
+        {
+          underline: isCurrentPath,
+          'text-emerald-500': isCurrentPath,
+          'text-emerald-600': !isCurrentPath,
+        },
       )}
     >
       {children}
