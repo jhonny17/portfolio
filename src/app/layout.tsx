@@ -1,7 +1,7 @@
+import cx from 'classnames';
+import { Toaster } from 'react-hot-toast';
 import type { Metadata, Viewport } from 'next';
 import { Inter, Orbitron } from 'next/font/google';
-
-import cx from 'classnames';
 
 import { Layout } from '@/components/Layout';
 
@@ -41,7 +41,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cx(inter.className, orbitron.variable)}>
-        <Layout>{children}</Layout>
+        <Layout>
+          {children}
+          <Toaster />
+        </Layout>
       </body>
     </html>
   );

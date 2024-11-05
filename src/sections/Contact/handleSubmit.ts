@@ -45,7 +45,9 @@ export const handleSubmit = async (_: unknown, formData: FormData) => {
           message,
         }),
       });
+
       form.message = 'Message sent successfully!';
+      form.data = { name: '', email: '', message: '' };
     }
   } catch (error) {
     console.error(error);

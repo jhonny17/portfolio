@@ -1,18 +1,33 @@
 'use client';
 import cx from 'classnames';
+import toast from 'react-hot-toast';
 import { useActionState } from 'react';
 
+import { debounce } from '@/utils/debounce';
 import { Card } from '@/components/ui/Card';
 import { GlowBackdrop } from '@/components/ui/GlowBackdrop';
 
 import { handleSubmit } from './handleSubmit';
 
+const debouncedSuccessToast = debounce(toast.success, 100);
+
 export const Contact = () => {
   const [formData, action, isPending] = useActionState(handleSubmit, undefined);
 
-  const { data, errors } = formData ?? {};
+  const { data, errors, message: successMessage } = formData ?? {};
   const { name, email, message } = data ?? {};
-  console.log({ isPending });
+
+  if (!isPending && successMessage) {
+    debouncedSuccessToast(successMessage, {
+      style: {
+        color: '#9ca3af',
+        background: '#0a0a0a',
+        boxShadow: '0 0 3px #10b981',
+      },
+      position: 'bottom-center',
+    });
+  }
+
   return (
     <section
       className={cx(
