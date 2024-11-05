@@ -15,7 +15,7 @@ exports[`matches the snapshot 1`] = `
         class="p-4 md:p-8 shadow-lg rounded-lg backdrop-sepia-0 backdrop-blur-sm bg-slate-950/40 grid mx-auto sm:w-[390px] md:w-[450px]"
       >
         <div
-          class="mb-2 text-center *:text-gray-400"
+          class="mb-2 text-center"
         >
           <h2
             class="font-logo text-2xl mb-1"
