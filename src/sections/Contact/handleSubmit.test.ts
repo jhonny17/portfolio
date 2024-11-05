@@ -129,7 +129,7 @@ it('returns form data with errors when all fields are missing', async () => {
   });
 });
 
-it('returns form data with message when all fields are valid', async () => {
+it('clears the form data and sets a message when all fields are valid', async () => {
   const formData = new FormData();
   formData.set('name', values.name);
   formData.set('email', values.email);
@@ -138,7 +138,7 @@ it('returns form data with message when all fields are valid', async () => {
   const result = await handleSubmit(undefined, formData);
 
   expect(result).toEqual({
-    data: values,
+    data: { name: '', email: '', message: '' },
     errors: {},
     message: 'Message sent successfully!',
   });
