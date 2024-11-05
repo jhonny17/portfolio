@@ -7,11 +7,32 @@
     @apply bg-neutral-950;
 
     * {
-      @apply font-mono text-emerald-600;
+      @apply font-mono text-gray-400 tracking-wide;
     }
 
     *:focus {
-      @apply outline-none outline-emerald-500;
+      @apply outline outline-2 outline-offset-2 outline-emerald-500;
+    }
+
+    *::selection {
+      @apply bg-emerald-700 text-neutral-950;
+    }
+
+    label {
+      @apply text-sm text-neutral-300;
+    }
+
+    input,
+    textarea {
+      @apply p-2 border border-emerald-800 w-full rounded bg-neutral-900 text-gray-300;
+
+      &:focus {
+        @apply shadow-[0_1px_2px_0_rgba(0,0,0,.05)] border-emerald-500;
+      }
+    }
+
+    button {
+      @apply p-2 rounded bg-emerald-500 text-neutral-900 hover:bg-emerald-600 font-bold tracking-wide font-sans;
     }
   }
 }
