@@ -17,5 +17,5 @@ it('should render the footer text', () => {
   expect(
     screen.getByText(`Jhonny Vargas Arias © ${year}`),
   ).toBeInTheDocument();
-  expect(screen.getByText('All rights reserved.')).toBeInTheDocument();
+  expect(screen.getByText('All rights reserved')).toBeInTheDocument();
 });
