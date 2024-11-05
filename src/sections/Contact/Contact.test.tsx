@@ -1,13 +1,29 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import toast from 'react-hot-toast';
 import { beforeEach, expect, it, vi } from 'vitest';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 
 import { Contact } from './Contact';
 import { ContactMessage } from './types';
 import { handleSubmit } from './handleSubmit';
 
 const mockedHandleSubmit = vi.mocked(handleSubmit);
+const mockedSuccessToast = vi.mocked(toast.success);
 
 vi.mock('./handleSubmit');
+vi.mock('@/utils/debounce', () => ({
+  debounce: (fn: any) => fn,
+}));
+
+vi.mock('react-hot-toast', async () => {
+  const library = await vi.importActual('react-hot-toast');
+  return {
+    ...library,
+    default: {
+      ...(library.default as any),
+      success: vi.fn(),
+    },
+  };
+});
 
 const values: ContactMessage = {
   name: 'John Doe',
@@ -25,6 +41,12 @@ it('renders the contact form', () => {
 });
 
 it('submits the form', async () => {
+  mockedHandleSubmit.mockResolvedValue({
+    data: values,
+    errors: {},
+    message: 'Message sent successfully!',
+  });
+
   render(<Contact />);
 
   const form = screen.getByRole('form');
@@ -53,6 +75,21 @@ it('submits the form', async () => {
 
   expect(mockedHandleSubmit).toHaveBeenCalledTimes(1);
   expect(mockedHandleSubmit).toHaveBeenCalledWith(undefined, formData);
+
+  await waitFor(() => {
+    expect(mockedSuccessToast).toHaveBeenCalledTimes(1);
+    expect(mockedSuccessToast).toHaveBeenCalledWith(
+      'Message sent successfully!',
+      {
+        position: 'bottom-center',
+        style: {
+          background: '#0a0a0a',
+          boxShadow: '0 0 3px #10b981',
+          color: '#9ca3af',
+        },
+      },
+    );
+  });
 });
 
 it('displays form errors', async () => {
