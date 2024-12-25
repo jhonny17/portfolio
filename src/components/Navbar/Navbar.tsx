@@ -38,6 +38,9 @@ export function Navbar({}: NavbarProps) {
             'font-logo',
             'font-semibold',
             'text-xl',
+            'focus:outline-none',
+            'focus:text-emerald-500',
+            'hover:text-emerald-500',
           )}
         >
           JVA

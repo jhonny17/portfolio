@@ -28,6 +28,8 @@ export const NavLink = ({ href, children }: NavbarItemProps) => {
         'duration-300',
         'transition-colors',
         'underline-offset-4',
+        'focus:outline-none',
+        'focus:text-emerald-500',
         'hover:text-emerald-500',
         {
           underline: isCurrentPath,
