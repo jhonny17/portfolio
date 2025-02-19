@@ -12,7 +12,7 @@ export const GlowBackdrop = ({ className }: GlowBackdropProps) => {
         'absolute',
         'inset-0',
         'blur-3xl',
-        'bg-gradient-to-r',
+        'bg-linear-to-r',
         'from-emerald-900',
         'from-0%',
         'to-emerald-800',

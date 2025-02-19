@@ -15,7 +15,7 @@ export const Card = ({ children, className }: CardProps) => {
         'shadow-lg',
         'rounded-lg',
         'backdrop-sepia-0',
-        'backdrop-blur-sm',
+        'backdrop-blur-xs',
         'bg-slate-950/40',
         className,
       )}

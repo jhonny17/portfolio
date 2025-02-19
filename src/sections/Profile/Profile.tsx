@@ -32,7 +32,16 @@ export const Profile = () => {
       />
 
       <div
-        className={cx('p-8', 'order-2', 'sm:order-1', 'flex', 'items-center')}
+        className={cx(
+          'p-8',
+          'order-2',
+          'sm:order-1',
+          'flex',
+          'items-center',
+          'justify-items-center',
+          'mr-auto',
+          'w-full',
+        )}
       >
         <Card className={cx('grid', 'mx-auto', 'sm:w-[390px]', 'md:w-[450px]')}>
           <div className={cx('mb-2', 'text-center')}>
@@ -48,7 +57,6 @@ export const Profile = () => {
         className={cx(
           'order-1',
           'sm:order-2',
-          'ml-auto',
           'w-full',
           'bg-neutral-950',
           'sm:bg-transparent',

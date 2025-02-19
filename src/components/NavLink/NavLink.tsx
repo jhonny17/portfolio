@@ -20,7 +20,7 @@ export const NavLink = ({ href, children }: NavbarItemProps) => {
       className={cx(
         'p-2',
         'flex',
-        'rounded',
+        'rounded-sm',
         'font-mono',
         'ease-in-out',
         'select-none',
@@ -28,7 +28,7 @@ export const NavLink = ({ href, children }: NavbarItemProps) => {
         'duration-300',
         'transition-colors',
         'underline-offset-4',
-        'focus:outline-none',
+        'focus:outline-hidden',
         'focus:text-emerald-500',
         'hover:text-emerald-500',
         {
