@@ -10,10 +10,9 @@ export const Profile = () => {
   return (
     <section
       className={cx(
-        'grid',
-        'sm:grid-cols-[1fr,auto]',
-        'lg:grid-cols-[1fr,1fr]',
-        'items-center',
+        'flex',
+        'flex-col',
+        'sm:flex-row',
         'w-full',
         'relative',
         'overflow-hidden',
@@ -32,7 +31,9 @@ export const Profile = () => {
         )}
       />
 
-      <div className={cx('p-8', 'order-2', 'sm:order-1')}>
+      <div
+        className={cx('p-8', 'order-2', 'sm:order-1', 'flex', 'items-center')}
+      >
         <Card className={cx('grid', 'mx-auto', 'sm:w-[390px]', 'md:w-[450px]')}>
           <div className={cx('mb-2', 'text-center')}>
             <h2 className={cx('font-logo', 'text-2xl', 'mb-1')}>
@@ -47,6 +48,8 @@ export const Profile = () => {
         className={cx(
           'order-1',
           'sm:order-2',
+          'ml-auto',
+          'w-full',
           'bg-neutral-950',
           'sm:bg-transparent',
         )}
