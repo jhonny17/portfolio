@@ -3,16 +3,16 @@
 exports[`matches the snapshot 1`] = `
 <DocumentFragment>
   <section
-    class="grid sm:grid-cols-[1fr,auto] lg:grid-cols-[1fr,1fr] items-center w-full relative overflow-hidden"
+    class="flex flex-col sm:flex-row w-full relative overflow-hidden"
   >
     <div
-      class="z-[-1] absolute inset-0 blur-3xl bg-gradient-to-r from-emerald-900 from-0% to-emerald-800 to-100% h-full sm:w-7/12 mt-auto mx-auto sm:ml-0 sm:mr-auto sm:my-auto sm:rounded-r-full"
+      class="z-[-1] absolute inset-0 blur-3xl bg-linear-to-r from-emerald-900 from-0% to-emerald-800 to-100% h-full sm:w-7/12 mt-auto mx-auto sm:ml-0 sm:mr-auto sm:my-auto sm:rounded-r-full"
     />
     <div
-      class="p-8 order-2 sm:order-1"
+      class="p-8 order-2 sm:order-1 flex items-center justify-items-center mr-auto w-full"
     >
       <div
-        class="p-4 md:p-8 shadow-lg rounded-lg backdrop-sepia-0 backdrop-blur-sm bg-slate-950/40 grid mx-auto sm:w-[390px] md:w-[450px]"
+        class="p-4 md:p-8 shadow-lg rounded-lg backdrop-sepia-0 backdrop-blur-xs bg-slate-950/40 grid mx-auto sm:w-[390px] md:w-[450px]"
       >
         <div
           class="mb-2 text-center"
@@ -31,7 +31,7 @@ exports[`matches the snapshot 1`] = `
       </div>
     </div>
     <div
-      class="order-1 sm:order-2 bg-neutral-950 sm:bg-transparent"
+      class="order-1 sm:order-2 w-full bg-neutral-950 sm:bg-transparent"
     >
       <img
         alt="Jhonny Vargas Arias"

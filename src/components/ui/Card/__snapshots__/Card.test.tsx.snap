@@ -3,7 +3,7 @@
 exports[`matches snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="p-4 md:p-8 shadow-lg rounded-lg backdrop-sepia-0 backdrop-blur-sm bg-slate-950/40"
+    class="p-4 md:p-8 shadow-lg rounded-lg backdrop-sepia-0 backdrop-blur-xs bg-slate-950/40"
   />
 </DocumentFragment>
 `;
