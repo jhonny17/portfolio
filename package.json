@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -18,24 +18,24 @@
   "dependencies": {
     "@tabler/icons-react": "^3.31.0",
     "classnames": "^2.5.1",
-    "next": "15.2.4",
+    "next": "15.4.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hot-toast": "^2.5.2"
   },
   "devDependencies": {
-    "@next/env": "15.2.4",
+    "@next/env": "15.4.1",
     "@tailwindcss/postcss": "^4.1.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@types/node": "^22.14.0",
-    "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
+    "@types/react": "19.1.8",
+    "@types/react-dom": "19.1.6",
     "@vitejs/plugin-react": "^4.3.4",
     "@vitest/coverage-v8": "^3.1.1",
     "eslint": "^8.57.1",
-    "eslint-config-next": "15.2.4",
+    "eslint-config-next": "15.4.1",
     "eslint-config-prettier": "^10.1.1",
     "husky": "^9.1.7",
     "jsdom": "^26.0.0",
@@ -45,5 +45,11 @@
     "typescript": "^5.8.2",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.1.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "19.1.8",
+      "@types/react-dom": "19.1.6"
+    }
   }
 }
