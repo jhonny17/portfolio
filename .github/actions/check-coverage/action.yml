@@ -1,12 +1,9 @@
 name: Check coverage
+description: Checks the test coverage
 
 inputs:
   github-token:
     description: 'GitHub token'
-    required: true
-
-  sops-kms-arn:
-    description: 'SOPS KMS ARN'
     required: true
 
   aws-access-key-id:
@@ -31,25 +28,6 @@ runs:
       uses: jhonnyvargasarias/portfolio/.github/actions/install-dependencies@main
       with:
         github-token: ${{ inputs.github-token }}
-
-    - name: Setup SOPS
-      uses: nhedger/setup-sops@v2
-
-    - name: Run SOPS
-      shell: bash
-      run: |
-        sops --version
-
-    - name: Prepare variables
-      continue-on-error: true
-      shell: bash
-      run: |
-        sops --output .env --decrypt .env.test.encrypted
-      env:
-        SOPS_KMS_ARN: ${{ inputs.sops-kms-arn }}
-        AWS_ACCESS_KEY_ID: ${{ inputs.aws-access-key-id }}
-        AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
-        AWS_DEFAULT_REGION: ${{ inputs.aws-default-region }}
 
     - name: Check coverage
       shell: bash

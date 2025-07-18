@@ -1,4 +1,5 @@
 name: Check linter
+description: Checks the code meets the linter standards
 
 inputs:
   github-token:
