@@ -18,23 +18,23 @@ runs:
       shell: bash
       run: npm install -g pnpm@9.12.3
 
-    - name: Get pnpm store path
-      id: pnpm-store-path
-      shell: bash
-      run: |
-        echo "pnpm store path: $(pnpm store path)"
-        echo "store-path=$(pnpm store path)" >> $GITHUB_OUTPUT
+    # - name: Get pnpm store path
+    #   id: pnpm-store-path
+    #   shell: bash
+    #   run: |
+    #     echo "pnpm store path: $(pnpm store path)"
+    #     echo "store-path=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-    - name: Cache pnpm store and node_modules
-      id: pnpm-cache
-      uses: actions/cache@v4
-      with:
-        path: |
-          ${{ steps.pnpm-store-path.outputs.store-path }}
-          node_modules
-        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-        restore-keys: |
-          ${{ runner.os }}-pnpm-store-
+    # - name: Cache pnpm store and node_modules
+    #   id: pnpm-cache
+    #   uses: actions/cache@v4
+    #   with:
+    #     path: |
+    #       ${{ steps.pnpm-store-path.outputs.store-path }}
+    #       node_modules
+    #     key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+    #     restore-keys: |
+    #       ${{ runner.os }}-pnpm-store-
 
     - name: Install dependencies
       shell: bash
