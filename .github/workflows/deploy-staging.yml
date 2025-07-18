@@ -38,6 +38,9 @@ jobs:
       - name: Build project
         run: pnpm build
 
+      - name: Install Wrangler
+        run: pnpm add wrangler@3.90.0 -w
+
       - name: Extract branch name
         id: extract_branch
         run: |
