@@ -1,4 +1,5 @@
 name: Check prettier
+description: Checks the code meets the style standards
 
 inputs:
   github-token:
