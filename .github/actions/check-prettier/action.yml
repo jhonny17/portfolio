@@ -10,7 +10,7 @@ runs:
   using: 'composite'
   steps:
     - name: Install dependencies
-      uses: jhonnyvargasarias/portfolio/.github/actions/install-dependencies@main
+      uses: jhonny17/portfolio/.github/actions/install-dependencies@main
       with:
         github-token: ${{ inputs.github-token }}
 

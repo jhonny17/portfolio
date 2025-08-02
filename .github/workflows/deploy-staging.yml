@@ -19,7 +19,7 @@ concurrency:
 jobs:
   run-code-checks:
     name: Run code checks
-    uses: jhonnyvargasarias/portfolio/.github/workflows/run-code-checks.yml@main
+    uses: jhonny17/portfolio/.github/workflows/run-code-checks.yml@main
     secrets: inherit
 
   publish:
@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        uses: jhonnyvargasarias/portfolio/.github/actions/install-dependencies@main
+        uses: jhonny17/portfolio/.github/actions/install-dependencies@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 

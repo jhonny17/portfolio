@@ -37,7 +37,7 @@ jobs:
 
       - name: Generate next version
         id: generate-next-version
-        uses: jhonnyvargasarias/actions/generate-next-version@main
+        uses: jhonny17/actions/generate-next-version@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           max_patch_version: 10
@@ -73,14 +73,14 @@ jobs:
 
   run-code-checks:
     name: Run code checks
-    uses: jhonnyvargasarias/portfolio/.github/workflows/run-code-checks.yml@main
+    uses: jhonny17/portfolio/.github/workflows/run-code-checks.yml@main
     needs: is-package-version-up-to-date
     if: ${{ needs.is-package-version-up-to-date.outputs.is_up_to_date == 'false' }}
     secrets: inherit
 
   bump-version:
     name: Bump version
-    uses: jhonnyvargasarias/portfolio/.github/workflows/bump-version.yml@main
+    uses: jhonny17/portfolio/.github/workflows/bump-version.yml@main
     needs:
       - generate-next-version
       - is-package-version-up-to-date
@@ -92,7 +92,7 @@ jobs:
 
   deploy_production:
     name: Deploy to production
-    uses: jhonnyvargasarias/portfolio/.github/workflows/deploy-production.yml@main
+    uses: jhonny17/portfolio/.github/workflows/deploy-production.yml@main
     needs: [generate-next-version, is-package-version-up-to-date]
     if: ${{ needs.is-package-version-up-to-date.outputs.is_up_to_date == 'true' }}
     secrets: inherit

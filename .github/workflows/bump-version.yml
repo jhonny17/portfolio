@@ -58,7 +58,7 @@ jobs:
               branch: 'main',
               sha: data.sha,
               committer: {
-                name: 'jhonnyvargasarias[bot]',
-                email: '106167787+jhonnyvargasarias[bot]@users.noreply.github.com'
+                name: 'jhonny17[bot]',
+                email: '106167787+jhonny17[bot]@users.noreply.github.com'
               }
             });
