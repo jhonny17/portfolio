@@ -49,9 +49,6 @@ jobs:
         uses: jhonny17/portfolio/.github/actions/run-tests@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-default-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
   check_coverage:
     name: Check coverage
@@ -65,6 +62,3 @@ jobs:
         uses: jhonny17/portfolio/.github/actions/check-coverage@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-default-region: ${{ secrets.AWS_DEFAULT_REGION }}
