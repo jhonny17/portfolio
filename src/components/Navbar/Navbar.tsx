@@ -7,9 +7,7 @@ import { getNavItems } from '@/data/navItems/getNavItems';
 
 import { NavLink } from '../NavLink';
 
-export type NavbarProps = {};
-
-export function Navbar({}: NavbarProps) {
+export function Navbar() {
   const navItems = getNavItems();
 
   return (

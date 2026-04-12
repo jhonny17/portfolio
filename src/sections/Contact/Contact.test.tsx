@@ -11,7 +11,7 @@ const mockedSuccessToast = vi.mocked(toast.success);
 
 vi.mock('./handleSubmit');
 vi.mock('@/utils/debounce', () => ({
-  debounce: (fn: any) => fn,
+  debounce: <T,>(fn: T) => fn,
 }));
 
 vi.mock('react-hot-toast', async () => {
@@ -19,7 +19,7 @@ vi.mock('react-hot-toast', async () => {
   return {
     ...library,
     default: {
-      ...(library.default as any),
+      ...(library.default as Record<string, unknown>),
       success: vi.fn(),
     },
   };

@@ -1,9 +1,8 @@
 import cx from 'classnames';
 
-export const Footer = () => {
-  const date = new Date();
-  const year = date.getFullYear();
+const year = new Date().getFullYear();
 
+export const Footer = () => {
   return (
     <footer
       className={cx('w-full', 'h-20', 'bg-neutral-950', 'p-2', 'md:px-8')}

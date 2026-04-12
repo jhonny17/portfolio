@@ -51,7 +51,7 @@ export const handleSubmit = async (_: unknown, formData: FormData) => {
     }
   } catch (error) {
     console.error(error);
-  } finally {
-    return form;
   }
+
+  return form;
 };

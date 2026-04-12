@@ -14,8 +14,6 @@ it('should render the footer text', () => {
   const date = new Date();
   const year = date.getFullYear();
 
-  expect(
-    screen.getByText(`Jhonny Vargas Arias © ${year}`),
-  ).toBeInTheDocument();
+  expect(screen.getByText(`Jhonny Vargas Arias © ${year}`)).toBeInTheDocument();
   expect(screen.getByText('All rights reserved')).toBeInTheDocument();
 });

@@ -4,7 +4,7 @@ import cx from 'classnames';
 import { Navbar } from '../Navbar';
 import { Footer } from '../Footer';
 
-export type LayoutProps = {
+type LayoutProps = {
   children?: ReactNode;
 };
 

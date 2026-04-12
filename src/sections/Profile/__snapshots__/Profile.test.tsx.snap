@@ -12,7 +12,7 @@ exports[`matches the snapshot 1`] = `
       class="p-8 order-2 sm:order-1 flex items-center justify-items-center mr-auto w-full"
     >
       <div
-        class="p-4 md:p-8 shadow-lg rounded-lg backdrop-sepia-0 backdrop-blur-xs bg-slate-950/40 grid mx-auto sm:w-[390px] md:w-[450px]"
+        class="p-4 md:p-8 shadow-lg rounded-lg backdrop-sepia-0 backdrop-blur-xs bg-slate-950/40 grid mx-auto sm:w-97.5 md:w-112.5"
       >
         <div
           class="mb-2 text-center"
@@ -35,7 +35,7 @@ exports[`matches the snapshot 1`] = `
     >
       <img
         alt="Jhonny Vargas Arias"
-        class="aspect-square ml-auto mt-8 w-[180px] md:w-[300px]"
+        class="aspect-square ml-auto mt-8 w-45 md:w-75"
         data-nimg="1"
         decoding="async"
         height="300"

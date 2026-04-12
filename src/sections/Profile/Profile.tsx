@@ -43,7 +43,7 @@ export const Profile = () => {
           'w-full',
         )}
       >
-        <Card className={cx('grid', 'mx-auto', 'sm:w-[390px]', 'md:w-[450px]')}>
+        <Card className={cx('grid', 'mx-auto', 'sm:w-97.5', 'md:w-112.5')}>
           <div className={cx('mb-2', 'text-center')}>
             <h2 className={cx('font-logo', 'text-2xl', 'mb-1')}>
               Jhonny Vargas Arias
@@ -68,13 +68,7 @@ export const Profile = () => {
           width={300}
           height={300}
           decoding="async"
-          className={cx(
-            'aspect-square',
-            'ml-auto',
-            'mt-8',
-            'w-[180px]',
-            'md:w-[300px]',
-          )}
+          className={cx('aspect-square', 'ml-auto', 'mt-8', 'w-45', 'md:w-75')}
         />
       </div>
     </section>

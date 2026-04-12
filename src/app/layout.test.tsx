@@ -78,11 +78,11 @@ describe('Root Layout', () => {
 
   it('renders the navbar', () => {
     render(<Layout>{childrenText}</Layout>, { container: document });
-    expect(screen.getByRole('navigation')).toBeInTheDocument;
+    expect(screen.getByRole('navigation')).toBeInTheDocument();
   });
 
   it('renders the footer', () => {
     render(<Layout>{childrenText}</Layout>, { container: document });
-    expect(screen.getByRole('contentinfo')).toBeInTheDocument;
+    expect(screen.getByRole('contentinfo')).toBeInTheDocument();
   });
 });
