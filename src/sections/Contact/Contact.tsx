@@ -46,8 +46,8 @@ export const Contact = () => {
           'gap-4',
           'md:gap-8',
           'mx-auto',
-          'sm:w-[390px]',
-          'md:w-[450px]',
+          'sm:w-97.5',
+          'md:w-112.5',
         )}
       >
         <h2 className={cx('text-2xl', 'font-logo', 'text-center')}>
