@@ -10,7 +10,13 @@ import prettier from 'eslint-config-prettier';
 import globals from 'globals';
 
 export default defineConfig([
-  globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts']),
+  globalIgnores([
+    '.next/**',
+    'out/**',
+    'build/**',
+    'coverage/**',
+    'next-env.d.ts',
+  ]),
 
   // Base JS rules
   js.configs.recommended,
