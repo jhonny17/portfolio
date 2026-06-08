@@ -33,7 +33,7 @@ jobs:
       next_version: ${{ steps.generate-next-version.outputs.next_version }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Generate next version
         id: generate-next-version
@@ -53,11 +53,11 @@ jobs:
       is_up_to_date: ${{ steps.check-package-version.outputs.is_up_to_date }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Check package.json version
         id: check-package-version
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -73,14 +73,14 @@ jobs:
 
   run-code-checks:
     name: Run code checks
-    uses: jhonny17/portfolio/.github/workflows/run-code-checks.yml@main
+    uses: ./.github/workflows/run-code-checks.yml
     needs: is-package-version-up-to-date
     if: ${{ needs.is-package-version-up-to-date.outputs.is_up_to_date == 'false' }}
     secrets: inherit
 
   bump-version:
     name: Bump version
-    uses: jhonny17/portfolio/.github/workflows/bump-version.yml@main
+    uses: ./.github/workflows/bump-version.yml
     needs:
       - generate-next-version
       - is-package-version-up-to-date
@@ -92,7 +92,7 @@ jobs:
 
   deploy_production:
     name: Deploy to production
-    uses: jhonny17/portfolio/.github/workflows/deploy-production.yml@main
+    uses: ./.github/workflows/deploy-production.yml
     needs: [generate-next-version, is-package-version-up-to-date]
     if: ${{ needs.is-package-version-up-to-date.outputs.is_up_to_date == 'true' }}
     secrets: inherit

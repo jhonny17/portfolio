@@ -1,0 +1,49 @@
+name: 'Deploy to Cloudflare Pages'
+description: 'Deploy built application to Cloudflare Pages'
+
+inputs:
+  cloudflare-api-token:
+    description: 'Cloudflare API token'
+    required: true
+  cloudflare-account-id:
+    description: 'Cloudflare account ID'
+    required: true
+  project-name:
+    description: 'Cloudflare Pages project name'
+    required: true
+  build-output-directory:
+    description: 'Directory containing the built application'
+    required: false
+    default: './out'
+  wrangler-version:
+    description: 'Wrangler version to install'
+    required: false
+    default: '3.90.0'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Validate build output
+      shell: bash
+      run: |
+        set -euo pipefail
+        BUILD_DIR="${{ inputs.build-output-directory }}"
+        if [[ ! -d "$BUILD_DIR" ]]; then
+          echo "Error: Build directory not found: $BUILD_DIR"
+          exit 1
+        fi
+        if [[ -z "$(ls -A "$BUILD_DIR")" ]]; then
+          echo "Error: Build directory is empty: $BUILD_DIR"
+          exit 1
+        fi
+
+    - name: Install Wrangler
+      shell: bash
+      run: pnpm add wrangler@${{ inputs.wrangler-version }} -w
+
+    - name: Deploy
+      uses: cloudflare/wrangler-action@v4
+      with:
+        apiToken: ${{ inputs.cloudflare-api-token }}
+        accountId: ${{ inputs.cloudflare-account-id }}
+        command: pages deploy ${{ inputs.build-output-directory }} --project-name=${{ inputs.project-name }}

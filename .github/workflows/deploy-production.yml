@@ -23,7 +23,7 @@ jobs:
       release_id: ${{ steps.create-tag-and-pre-release-step.outputs.release_id }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Create tag and pre-release
         id: create-tag-and-pre-release-step
@@ -38,31 +38,23 @@ jobs:
     needs: create-tag-and-pre-release
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install dependencies
-        uses: jhonny17/portfolio/.github/actions/install-dependencies@main
+        uses: ./.github/actions/install-dependencies
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build project
         run: pnpm build
 
-      - name: Install Wrangler
-        run: pnpm add wrangler@3.90.0 -w
-
-      - name: Extract branch name
-        id: extract_branch
-        run: |
-          echo "branch_name=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
-
-      - name: Deploy
-        id: deploy
-        uses: cloudflare/wrangler-action@v3
+      - name: Deploy to Cloudflare Pages
+        uses: ./.github/actions/deploy-cloudflare
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy ${{ secrets.BUILD_OUTPUT_DIRECTORY }} --project-name=${{ secrets.CLOUDFLARE_PROJECT_NAME }}
+          cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          cloudflare-account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          project-name: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
+          build-output-directory: ${{ secrets.BUILD_OUTPUT_DIRECTORY }}
 
   publish_release_on_sucess:
     name: Publish Release on Success
@@ -71,7 +63,7 @@ jobs:
     if: ${{ success() }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Update pre-release to release
         uses: jhonny17/actions/update-release@main
@@ -88,7 +80,7 @@ jobs:
     if: ${{ failure() || cancelled() }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Delete release
         uses: jhonny17/actions/delete-release@main

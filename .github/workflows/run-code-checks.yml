@@ -17,10 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Check prettier
-        uses: jhonny17/portfolio/.github/actions/check-prettier@main
+        uses: ./.github/actions/check-prettier
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -30,10 +30,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Check eslint
-        uses: jhonny17/portfolio/.github/actions/check-linter@main
+        uses: ./.github/actions/check-linter
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -43,10 +43,10 @@ jobs:
     needs: check_prettier
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Run tests
-        uses: jhonny17/portfolio/.github/actions/run-tests@main
+        uses: ./.github/actions/run-tests
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -56,9 +56,9 @@ jobs:
     needs: check_prettier
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Check coverage
-        uses: jhonny17/portfolio/.github/actions/check-coverage@main
+        uses: ./.github/actions/check-coverage
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}

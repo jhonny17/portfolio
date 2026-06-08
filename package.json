@@ -3,6 +3,12 @@
   "version": "0.5.6",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=24.16.0",
+    "pnpm": ">=11.5.2",
+    "npm": "Please use pnpm",
+    "yarn": "Please use pnpm"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -17,49 +23,41 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@tabler/icons-react": "^3.41.1",
+    "@tabler/icons-react": "^3.44.0",
     "classnames": "^2.5.1",
-    "next": "16.2.3",
-    "react": "19.2.5",
-    "react-dom": "19.2.5",
+    "next": "16.2.7",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
     "react-hot-toast": "^2.6.0"
   },
   "devDependencies": {
-    "@eslint-react/eslint-plugin": "^4.2.3",
+    "@eslint-react/eslint-plugin": "^5.8.16",
     "@eslint/js": "^10.0.1",
-    "@next/env": "16.2.3",
-    "@next/eslint-plugin-next": "16.2.3",
-    "@tailwindcss/postcss": "^4.2.2",
+    "@next/env": "16.2.7",
+    "@next/eslint-plugin-next": "16.2.7",
+    "@tailwindcss/postcss": "^4.3.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
-    "@types/node": "^25.6.0",
-    "@types/react": "19.2.14",
+    "@types/node": "^25.9.2",
+    "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
-    "@vitejs/plugin-react": "^6.0.1",
-    "@vitest/coverage-v8": "^4.1.4",
-    "eslint": "^10.2.0",
+    "@vitejs/plugin-react": "^6.0.2",
+    "@vitest/coverage-v8": "^4.1.8",
+    "eslint": "^10.4.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import-x": "^4.16.2",
     "eslint-plugin-jsx-a11y": "^6.10.2",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "globals": "^17.5.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.6.0",
     "husky": "^9.1.7",
-    "jsdom": "^29.0.2",
-    "postcss": "^8.5.9",
-    "prettier": "3.8.2",
-    "tailwindcss": "^4.2.2",
-    "typescript": "^6.0.2",
-    "typescript-eslint": "^8.58.1",
-    "vite": "^8.0.8",
-    "vitest": "^4.1.4"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@tailwindcss/oxide",
-      "esbuild",
-      "sharp",
-      "unrs-resolver"
-    ]
+    "jsdom": "^29.1.1",
+    "postcss": "^8.5.15",
+    "prettier": "3.8.3",
+    "tailwindcss": "^4.3.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.60.1",
+    "vite": "^8.0.16",
+    "vitest": "^4.1.8"
   }
 }
