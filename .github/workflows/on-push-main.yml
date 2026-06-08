@@ -73,14 +73,14 @@ jobs:
 
   run-code-checks:
     name: Run code checks
-    uses: jhonny17/portfolio/.github/workflows/run-code-checks.yml@main
+    uses: ./.github/workflows/run-code-checks.yml
     needs: is-package-version-up-to-date
     if: ${{ needs.is-package-version-up-to-date.outputs.is_up_to_date == 'false' }}
     secrets: inherit
 
   bump-version:
     name: Bump version
-    uses: jhonny17/portfolio/.github/workflows/bump-version.yml@main
+    uses: ./.github/workflows/bump-version.yml
     needs:
       - generate-next-version
       - is-package-version-up-to-date
@@ -92,7 +92,7 @@ jobs:
 
   deploy_production:
     name: Deploy to production
-    uses: jhonny17/portfolio/.github/workflows/deploy-production.yml@main
+    uses: ./.github/workflows/deploy-production.yml
     needs: [generate-next-version, is-package-version-up-to-date]
     if: ${{ needs.is-package-version-up-to-date.outputs.is_up_to_date == 'true' }}
     secrets: inherit

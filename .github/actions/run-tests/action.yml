@@ -13,7 +13,7 @@ runs:
       uses: actions/checkout@v6
 
     - name: Install dependencies
-      uses: jhonny17/portfolio/.github/actions/install-dependencies@main
+      uses: ./.github/actions/install-dependencies
       with:
         github-token: ${{ inputs.github-token }}
 
