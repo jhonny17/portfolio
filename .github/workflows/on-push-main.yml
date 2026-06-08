@@ -33,7 +33,7 @@ jobs:
       next_version: ${{ steps.generate-next-version.outputs.next_version }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Generate next version
         id: generate-next-version
@@ -53,11 +53,11 @@ jobs:
       is_up_to_date: ${{ steps.check-package-version.outputs.is_up_to_date }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Check package.json version
         id: check-package-version
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |

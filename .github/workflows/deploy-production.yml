@@ -23,7 +23,7 @@ jobs:
       release_id: ${{ steps.create-tag-and-pre-release-step.outputs.release_id }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Create tag and pre-release
         id: create-tag-and-pre-release-step
@@ -38,7 +38,7 @@ jobs:
     needs: create-tag-and-pre-release
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install dependencies
         uses: jhonny17/portfolio/.github/actions/install-dependencies@main
@@ -58,7 +58,7 @@ jobs:
 
       - name: Deploy
         id: deploy
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -71,7 +71,7 @@ jobs:
     if: ${{ success() }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Update pre-release to release
         uses: jhonny17/actions/update-release@main
@@ -88,7 +88,7 @@ jobs:
     if: ${{ failure() || cancelled() }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Delete release
         uses: jhonny17/actions/delete-release@main
